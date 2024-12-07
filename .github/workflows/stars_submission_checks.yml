@@ -13,16 +13,6 @@ jobs:
       with:
         fetch-depth: 0  # Fetch the full history
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
-
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip setuptools wheel
-        pip install -r .github/scripts/requirements.txt
-
     - name: Confirm only changes in allowed files
       run: |
         
@@ -43,7 +33,7 @@ jobs:
         # Check each file and list problems
         for FILE in "${BLOCKED_FILES[@]}"; do
           if grep -qx "$FILE" changed_files.txt; then
-            echo "Found problematic file: $FILE"
+            echo "ERROR: Commit includes changes to shared file: $FILE"
             DISALLOWED_FILE_CHANGE_FOUND=true
           fi
         done
@@ -55,5 +45,15 @@ jobs:
           echo "No blocked files were changed."
         fi
 
-    - name: Confirm Environment
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install -r .github/scripts/requirements.txt
+
+    - name: Confirm Python Environment
       run: python ./.github/scripts/test_environment.py
