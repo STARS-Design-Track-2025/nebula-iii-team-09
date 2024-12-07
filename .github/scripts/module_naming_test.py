@@ -46,9 +46,17 @@ def validate_modules(module_list):
             error_count += 1
             print(f"Error in {os.path.basename(file)}: Module '{module}' does not match 't##_module_name' format.")
 
+def find_root_directory(start_path, target_root="nebula-iii"):
+    current_path = start_path
+    
+    while current_path != os.path.dirname(current_path):  # Loop until we reach the root
+        if os.path.basename(current_path) == target_root:
+            return current_path
+        current_path = os.path.dirname(current_path)
+    
+    return None  # Return None if "nebula-iii" is not found
 
-# Get current working directory
-verilog_directory = os.getcwd() + "/../../verilog"
+verilog_directory = find_root_directory(os.getcwd()) + "/verilog"
 
 team_project_directory = verilog_directory + "/rtl/team_projects"
 
@@ -69,13 +77,13 @@ for team, team_folder in zip(teams, team_folders):
     module_info = []
     # Iterate through the files and search for module names
     for file in team_files:
-       with open(file, 'r') as f:
-           lines = f.readlines()
-           # Check each line for module pattern
-           for line_number, line in enumerate(lines, start=1):
-               matches = module_pattern.findall(line)  # Find all matches in the current line
-               for match in matches:
-                   module_info.append((file, line_number, match))
+        with open(file, 'r') as f:
+            lines = f.readlines()
+            # Check each line for module pattern
+            for line_number, line in enumerate(lines, start=1):
+                matches = module_pattern.findall(line)  # Find all matches in the current line
+                for match in matches:
+                    module_info.append((file, line_number, match))
 
     # Print the list of modules with filenames and line numbers
     print("Found the following modules")
