@@ -1,0 +1,24 @@
+name: Run STARS Submission Checks
+
+on: [push, pull_request]  # Trigger on push and PRs
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Use the desired Python version
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r .github/scripts/requirements.txt
+
+    - name: Confirm Environment
+      run: python ./github/scripts/your_script.py
