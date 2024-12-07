@@ -1,7 +1,7 @@
 name: Run STARS Submission Checks
 
-# on: [push, pull_request]  # Trigger on push and PRs
-on: [pull_request]  # Trigger on PRs
+on: [push, pull_request]  # Trigger on push and PRs
+# on: [pull_request]  # Trigger on PRs
 
 jobs:
   run-script:
