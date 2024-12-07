@@ -1,4 +1,9 @@
 name: Run STARS Submission Checks
+# Improvements
+# ------------
+# Change disallowed file script to allow folders to be blocked
+# Determine which files should be in disallowed files script
+
 
 on: [push, pull_request]  # Trigger on push and PRs
 # on: [pull_request]  # Trigger on PRs
@@ -16,6 +21,8 @@ jobs:
     - name: Confirm only changes in allowed files
       run: |
         
+        # When merging teams' files together, common editing of files causes issues.
+
         # Commit with most up to date common files. Do not change unless you are working on the post-program integration team or have explicit permission from someone who is.
         BASE_COMMIT="1ee10023ab63bcb9e9ca14395f2528c9bc29e181" #12/7/2024, "Fix python script path in workflow"
         
@@ -57,3 +64,6 @@ jobs:
 
     - name: Confirm Python Environment
       run: python ./.github/scripts/test_environment.py
+
+    - name: Module Naming Check
+      run: python ./.github/scripts/module_naming_test.py
