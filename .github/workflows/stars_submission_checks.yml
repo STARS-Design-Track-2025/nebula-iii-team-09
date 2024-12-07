@@ -22,4 +22,4 @@ jobs:
         pip install -r .github/scripts/requirements.txt
 
     - name: Confirm Environment
-      run: python ./github/scripts/test_environment.py
+      run: python ./.github/scripts/test_environment.py
