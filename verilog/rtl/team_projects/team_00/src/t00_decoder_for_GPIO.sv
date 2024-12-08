@@ -4,7 +4,7 @@
 // Author:      Miguel Isrrael Teran
 // Description: Decoder for GPIO outputs
 
-module decoder_for_GPIO (
+module t00_decoder_for_GPIO (
     input logic [5:0] in,
     output logic [33:0] out
 );
