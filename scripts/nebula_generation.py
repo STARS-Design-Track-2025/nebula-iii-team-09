@@ -145,8 +145,7 @@ module nebula (
 """\
 )
 
-        for team in teams:
-            team_number = team.split("_")[-1] # Intentionally a string
+        for team_number, team in enumerate(teams):
             f.write(\
 f"""      
     // {team} Project Instance
