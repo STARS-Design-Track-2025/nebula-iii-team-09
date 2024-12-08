@@ -51,3 +51,7 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_00/team_00_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_00/src/t00_decoder_for_GPIO.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_00/src/t00_flex_counter.sv
+# Team 01
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01.sv
