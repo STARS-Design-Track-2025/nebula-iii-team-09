@@ -19,8 +19,7 @@
 .SUFFIXES:
 .SILENT: clean all
 
-
-PATTERNS = io_ports la_test1 la_test2 wb_port wb_test mprj_stimulus sample_proj team_01 team_02 team_03 team_04 team_05 team_06 team_07 team_08 team_09 team_10 team_11 team_12
+PATTERNS := $(shell ls -d team_[0-9][0-9] 2>/dev/null)
 
 all:  ${PATTERNS}
 

@@ -24,7 +24,7 @@ jobs:
         # When merging teams' files together, common editing of files causes issues.
 
         # Commit with most up to date common files. Do not change unless you are working on the post-program integration team or have explicit permission from someone who is.
-        BASE_COMMIT="41a5e56cc7f3c81751c77ff98f0c8c2953e644a3" #12/8/2024
+        BASE_COMMIT="13b37e6beb9cce2ddbb37a1af363b1ec91ef4500" #12/8/2024
         
         # Get list of changed files between the base commit and current commit
         git diff --name-only $BASE_COMMIT ${{ github.sha }} > changed_files.txt
@@ -55,9 +55,58 @@ jobs:
                         "verilog/rtl/wb_interconnect.sv" \
                         "verilog/rtl/user_project_wrapper.v" \
                         "verilog/rtl/defines.v" \
+                        "verilog/rtl/team_projects/team_00/src/t00_decoder_for_GPIO.sv" \
+                        "verilog/rtl/team_projects/team_00/src/t00_flex_counter.sv" \
+                        "verilog/rtl/team_projects/team_00/includes" \
+                        "verilog/rtl/team_projects/team_00/includes" \
+                        "verilog/rtl/team_projects/team_00/Makefile" \
+                        "verilog/rtl/team_projects/team_00/team_00_WB.v" \
+                        "verilog/rtl/team_projects/team_00/team_00_Wrapper.sv" \
+                        "verilog/rtl/team_projects/team_00/team_00.sv" \
+                        "verilog/rtl/team_projects/team_00/team_00.yml" \
+                        "verilog/dv/make/sim.makefile" \
+                        "verilog/dv/team_00/module_tests/Makefile" \
+                        "verilog/dv/team_00/Makefile" \
+                        "verilog/dv/team_00/team_00_tb.v" \
+                        "verilog/dv/team_00/team_00.c" \
                         "Makefile" \
                         "verilog/Makefile" \
                         "verilog/dv/Makefile" \
+                        "template_files/config.json" \
+                        "template_files/includes" \
+                        "template_files/Makefile_dv" \
+                        "template_files/Makefile_dv_module" \
+                        "template_files/Makefile_rtl" \
+                        "template_files/team_tb.v" \
+                        "template_files/team_Wrapper.sv" \
+                        "template_files/team.c" \
+                        "template_files/team.sv" \
+                        "template_files/team.yml" \
+                        "openlane/user_project_wrapper/config.json" \
+                        "def/user_project_wrapper.def" \
+                        "gds/user_project_wrapper.gz.gds" \
+                        "lef/user_project_wrapper.lef" \
+                        "lib/user_project_wrapper.lib" \
+                        "mag/user_project_wrapper.mag" \
+                        "mag/user_project_wrapper.gz.mag" \
+                        "sdc/user_project_wrapper.sdc" \
+                        "spef/user_project_wrapper.spef" \
+                        "spef/multicorner/user_project_wrapper.min.spef" \
+                        "spef/multicorner/user_project_wrapper.max.spef" \
+                        "spef/multicorner/user_project_wrapper.nom.spef" \
+                        "spi/user_project_wrapper.spi" \
+                        "def/ffram.def" \
+                        "gds/ffram.gz.gds" \
+                        "lef/ffram.lef" \
+                        "lib/ffram.lib" \
+                        "mag/ffram.mag" \
+                        "mag/ffram.gz.mag" \
+                        "sdc/ffram.sdc" \
+                        "spef/ffram.spef" \
+                        "spef/multicorner/ffram.min.spef" \
+                        "spef/multicorner/ffram.max.spef" \
+                        "spef/multicorner/ffram.nom.spef" \
+                        "spi/ffram.spi" \
                         )
 
         # Initialize a flag to detect if any disallowed files were changed
@@ -92,6 +141,9 @@ jobs:
 
     - name: Confirm Python Environment
       run: python ./.github/scripts/test_environment.py
+
+    - name: Check New Files
+      run: python .github/scripts/check_new_files.py
 
     - name: Module Naming Check
       run: python ./.github/scripts/module_naming_test.py
