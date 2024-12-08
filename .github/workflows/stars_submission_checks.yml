@@ -24,7 +24,7 @@ jobs:
         # When merging teams' files together, common editing of files causes issues.
 
         # Commit with most up to date common files. Do not change unless you are working on the post-program integration team or have explicit permission from someone who is.
-        BASE_COMMIT="77cf694f4ebbca5c39f56ad2e3af0f8da0cc7d09" #12/8/2024
+        BASE_COMMIT="7bc0ab1e0e15d0ce7dc700d9a7a952703f83968e" #12/8/2024
         
         # Get list of changed files between the base commit and current commit
         git diff --name-only $BASE_COMMIT ${{ github.sha }} > changed_files.txt
