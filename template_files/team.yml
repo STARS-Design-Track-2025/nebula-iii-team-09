@@ -123,9 +123,20 @@ reset:
 # For example, if you create a register here, you can write its value
 # from the C file that you will eventually write.  Also see "Ports" below.
 registers:
-
+  - name: EN_VAL
+    size: 1
+    mode: w
+    fifo: false
+    offset: 15 # Enter your team number here
+    bit_access: false
+    write_port: en
+    description: Enables or disables team design
 # See "Registers" above.  These must be used together
 ports:
+  - name: en
+    width: 1
+    direction: input
+    description: Enables or disables team design
 
 # Feel free to add flags as you see fit.
-flags:
+# flags:

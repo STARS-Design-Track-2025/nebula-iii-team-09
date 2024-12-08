@@ -149,7 +149,7 @@ module team_##_tb;
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (100) begin
 			repeat (1000) @(posedge clock);
-			// $display("+1000 cycles");
+			$display("+1000 cycles");
 		end
 		$display("%c[1;31m",27);
 		`ifdef GL
@@ -164,16 +164,16 @@ module team_##_tb;
 	// Main Test Bench Process
 	initial begin
 		// Wait for design to be enabled
-		wait(uut.mprj.mprj.team_##_Wrapper.team_##_WB.instance_to_wrap.\en == 1);
-		#(2500);
+		// wait(uut.mprj.mprj.team_##_Wrapper.team_##_WB.instance_to_wrap.\en == 1);
+		// #(2500);
 
 		
-		`ifdef GL
-	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
-		`else
-		    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
-		`endif
-	    $finish;
+		// `ifdef GL
+	    // 	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
+		// `else
+		//     $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
+		// `endif
+	    // $finish;
 	end
 
 	// Reset Operation

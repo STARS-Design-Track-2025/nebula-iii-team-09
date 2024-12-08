@@ -650,14 +650,13 @@ nebula: bus-wrap-generate
 # Fill in team_00.yml
 # make bus-wrap-setup
 # Change the project info flags to select additional features
-# make bus-wrap-generate.  This updates the team_00.yml, team_00_WB.v, and team_00_Wrapper.sv
-# Create source files for verilog in src folder
-# Create a top level (team_00.sv), manually commenting / uncommenting the ports that you need
 # make nebula
 # Add src files to /openlane/team_00/config.json and /verilog/rtl/team_projects/team_00/includes
-# make team_00
-# make install
 # make purdue-setup
 # make purdue-verify-team_00-rtl
+# make team_00
+# make install
 # manually place macros in macro.cfg
 # make user_project_wrapper
+# make purdue-verify-team_00-gl
+# push to github and check to make sure that the github action passed

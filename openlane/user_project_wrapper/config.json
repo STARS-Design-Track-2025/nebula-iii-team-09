@@ -18,6 +18,9 @@
       
         "dir::../../verilog/rtl/team_projects/team_00/team_00_WB.v",
         "dir::../../verilog/rtl/team_projects/team_00/team_00_Wrapper.sv",  
+      
+        "dir::../../verilog/rtl/team_projects/team_01/team_01_WB.v",
+        "dir::../../verilog/rtl/team_projects/team_01/team_01_Wrapper.sv",  
                 
         "dir::../../verilog/rtl/user_project_wrapper.v"
     ],
@@ -29,6 +32,8 @@
     "FP_PDN_MACRO_HOOKS": [
       
         "mprj.team_00_Wrapper.team_00_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
+      
+        "mprj.team_01_Wrapper.team_01_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
                 
         "mprj.ffram vccd1 vssd1 vccd1 vssd1"
     ],
@@ -37,26 +42,33 @@
     "VERILOG_FILES_BLACKBOX": [
       
         "dir::../../verilog/gl/team_00.v",
+      
+        "dir::../../verilog/gl/team_01.v",
                 
         "dir::../../verilog/gl/ffram.v"
     ],
     "EXTRA_LEFS": [
       
         "dir::../../lef/team_00.lef",
+      
+        "dir::../../lef/team_01.lef",
                 
         "dir::../../lef/ffram.lef"
     ],
     "EXTRA_GDS_FILES": [
       
         "dir::../../gds/team_00.gds",
+      
+        "dir::../../gds/team_01.gds",
                 
         "dir::../../gds/ffram.gds"
     ],
     "EXTRA_LIBS": [
       
         "dir::../../lib/team_00.lib",
+      
+        "dir::../../lib/team_01.lib",
      
-           
         "dir::../../lib/ffram.lib"
     ],
     "EXTRA_SPEFS": [
@@ -65,6 +77,11 @@
         "dir::../../spef/multicorner/team_00.min.spef", 
         "dir::../../spef/multicorner/team_00.nom.spef", 
         "dir::../../spef/multicorner/team_00.max.spef",
+      
+        "team_01", 
+        "dir::../../spef/multicorner/team_01.min.spef", 
+        "dir::../../spef/multicorner/team_01.nom.spef", 
+        "dir::../../spef/multicorner/team_01.max.spef",
                 
         "ffram", 
         "dir::../../spef/multicorner/ffram.min.spef", 

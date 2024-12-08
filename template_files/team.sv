@@ -23,10 +23,6 @@ module team_## (
     // output logic [31:0] la_data_out,
     // input logic [31:0] la_oenb,
 
-    // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
-    input  logic [33:0] gpio_in, // Breakout Board Pins
-    output logic [33:0] gpio_out, // Breakout Board Pins
-    output logic [33:0] gpio_oeb, // Active Low Output Enable
 
     // Wishbone master interface
     // output wire [31:0] ADR_O,
@@ -36,8 +32,12 @@ module team_## (
     // output wire        STB_O,
     // output wire        CYC_O,
     // input wire [31:0]  DAT_I,
-    // input wire         ACK_I
+    // input wire         ACK_I,
 
+    // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
+    input  logic [33:0] gpio_in, // Breakout Board Pins
+    output logic [33:0] gpio_out, // Breakout Board Pins
+    output logic [33:0] gpio_oeb // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the
@@ -47,5 +47,8 @@ module team_## (
 
     // You can also have input registers controlled by the Caravel Harness's on chip processor
 );
+
+    assign gpio_out = '0;
+    assign gpio_oeb = '0;
 
 endmodule

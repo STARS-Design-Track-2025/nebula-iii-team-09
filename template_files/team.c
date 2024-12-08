@@ -19,7 +19,8 @@
 #include <defs.h>
 #include <stub.c>
 
-#define reg_team_##_EN (*(volatile uint32_t*)0x30010000)
+// Change this to 300X0000 where X is your team number
+#define reg_team_##_EN (*(volatile uint32_t*)0x30000000)
 
 // GPIO Control
 #define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
@@ -111,14 +112,14 @@ void main()
 	// Each nibble is used by the GPIO control unit to determine the which input to the GPIO
 	// Controls the output.  This allows for multiple projects to interface with the outside world
 	// Simultaneously if desired.
-	reg_gpio_PIN_0TO7 = 0x11111111;
-	reg_gpio_PIN_8TO15 = 0x11111111;
-	reg_gpio_PIN_16TO23 = 0x11111111;
-	reg_gpio_PIN_24TO31 = 0x11111111;
-	reg_gpio_PIN_32TO37 = 0x111111;
+	reg_gpio_PIN_0TO7 = 0x00000000;
+	reg_gpio_PIN_8TO15 = 0x00000000;
+	reg_gpio_PIN_16TO23 = 0x00000000;
+	reg_gpio_PIN_24TO31 = 0x00000000;
+	reg_gpio_PIN_32TO37 = 0x000000;
 
     // write your design (enable)
-    reg_team_01_EN = 1;
+    reg_team_##_EN = 1;
     // your design:
     // read from sram
 }

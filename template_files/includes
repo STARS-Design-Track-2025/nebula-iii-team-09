@@ -1,4 +1,4 @@
 # Team ##
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_00/team_##_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_00/team_##_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_00/team_##.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_##/team_##_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_##/team_##_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_##/team_##.sv
