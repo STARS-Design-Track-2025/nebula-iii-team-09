@@ -2,4 +2,4 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_WB.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/src/constant_0.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/src/t03_constant_0.sv
