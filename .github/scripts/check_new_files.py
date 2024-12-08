@@ -1,12 +1,18 @@
 import subprocess
 import sys
+import re
 
 # Define allowed directories
-ALLOWED_DIRECTORIES = {"verilog", "docs", "scripts", "tests"}
+ALLOWED_DIRECTORIES = {"def", "docs", "gds", "lef", "lib", "mag", "sdc", "signoff", "spef", "spi", "rtl/team_projects"}
+
+TEAM_DV_PATTERN = re.compile(r"^verilog/dv/team_[0-9][0-9]/")
+
+# Only change commit hash if you are a member of the post-program integration team.  All others will be banished off the face of the Earth
+STABLE_COMMIT_HASH = "3ac67e25e2558ed823045f59bb24d0f7545588e4"  # Replace with your desired commit hash
 
 # Get added files from git diff
 result = subprocess.run(
-    ["git", "diff", "--name-only", "--cached", "--diff-filter=A"],
+    ["git", "diff", "--name-only", "--cached", f"{STABLE_COMMIT_HASH}"],
     capture_output=True,
     text=True,
     check=True
@@ -16,7 +22,9 @@ added_files = result.stdout.strip().splitlines()
 
 # Check if any added file is outside allowed directories
 invalid_files = [
-    f for f in added_files if not any(f.startswith(dir + "/") for dir in ALLOWED_DIRECTORIES)
+    f for f in added_files 
+    if not any(f.startswith(dir + "/") for dir in ALLOWED_DIRECTORIES) 
+    and not TEAM_DV_PATTERN.match(f)
 ]
 
 if invalid_files:
