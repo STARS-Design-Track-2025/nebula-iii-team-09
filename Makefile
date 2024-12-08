@@ -644,19 +644,4 @@ nebula: bus-wrap-generate
 	@python3 ./scripts/nebula_generation.py
 	@python3 ./scripts/includes_generation.py
 	@python3 ./scripts/config_generation.py
-
-# Example flow:
-# make init_team_00
-# Fill in team_00.yml
-# make bus-wrap-setup
-# Change the project info flags to select additional features
-# make nebula
-# Add src files to /openlane/team_00/config.json and /verilog/rtl/team_projects/team_00/includes
-# make purdue-setup
-# make purdue-verify-team_00-rtl
-# make team_00
-# make install
-# manually place macros in macro.cfg
-# make user_project_wrapper
-# make purdue-verify-team_00-gl
-# push to github and check to make sure that the github action passed
+	
