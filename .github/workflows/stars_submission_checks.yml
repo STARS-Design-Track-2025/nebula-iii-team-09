@@ -30,7 +30,35 @@ jobs:
         git diff --name-only $BASE_COMMIT ${{ github.sha }} > changed_files.txt
         
         # List of files teams shouldn't change
-        BLOCKED_FILES=(".github/scripts/requirements.txt" "verilog/rtl/Makefile")
+        BLOCKED_FILES=(".github/scripts/requirements.txt" \
+                        "verilog/rtl/Makefile" \
+                        "verilog/includes/includes.rtl.global" \
+                        "verilog/includes/includes.gl.global" \
+                        "verilog/rtl/ffram/ffram_WB_Wrapper.sv" \
+                        "verilog/rtl/ffram/ffram_WB.sv" \
+                        "verilog/rtl/ffram/ffram.sv" \
+                        "verilog/rtl/ffram/ffram.yml" \
+                        "verilog/rtl/ffram/ffram.yml" \
+                        "verilog/rtl/gpio_control/gpio_control_WB.sv" \
+                        "verilog/rtl/gpio_control/gpio_control_WB.v" \
+                        "verilog/rtl/gpio_control/gpio_control_Wrapper.v" \
+                        "verilog/rtl/gpio_control/gpio_control.sv" \
+                        "verilog/rtl/gpio_control/gpio_control.yml" \
+                        "verilog/rtl/la_control/la_control_WB.v" \
+                        "verilog/rtl/la_control/la_control_Wrapper.v" \
+                        "verilog/rtl/la_control/la_control.sv" \
+                        "verilog/rtl/la_control/la_control.yml" \
+                        "verilog/rtl/wishbone_interconnect/wishbone_arbitrator.sv" \
+                        "verilog/rtl/wishbone_interconnect/wishbone_decoder.sv" \
+                        "verilog/rtl/wishbone_manager/wishbone_manager.sv" \
+                        "verilog/rtl/wb_wrapper.vh" \
+                        "verilog/rtl/wb_interconnect.sv" \
+                        "verilog/rtl/user_project_wrapper.v" \
+                        "verilog/rtl/defines.v" \
+                        "Makefile" \
+                        "verilog/Makefile" \
+                        "verilog/dv/Makefile" \
+                        )
 
         # Initialize a flag to detect if any disallowed files were changed
         DISALLOWED_FILE_CHANGE_FOUND=false
