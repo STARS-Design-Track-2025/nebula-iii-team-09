@@ -9,7 +9,7 @@ TEAM_DV_PATTERN = re.compile(r"^verilog/dv/team_[0-9][0-9]/")
 TEAM_OPENLANE_PATTERN = re.compile(r"^openlane/team_[0-9][0-9]/")
 
 # Only change commit hash if you are a member of the post-program integration team.  All others will be banished off the face of the Earth
-STABLE_COMMIT_HASH = "f3d84c7b784948c2054b5c44bc2262d92bfcbc84"  # 12/8/2024
+STABLE_COMMIT_HASH = "c47b8cc7496d203a9bf8c9a511bfac31fc3b2d58"  # 12/8/2024
 
 # Get added files from git diff
 result = subprocess.run(
