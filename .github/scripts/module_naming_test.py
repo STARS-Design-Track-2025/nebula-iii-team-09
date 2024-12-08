@@ -23,11 +23,11 @@ def validate_modules(module_list):
     module_names = {}
 
     for file, line_number, module in module_list:
-        if re.match(r"team_[0-9][0-9]_WB", s):
+        if re.match(r"team_[0-9][0-9]_WB", module):
             continue # Ignore the default modules
-        if re.match(r"team_[0-9][0-9]", s):
+        if re.match(r"team_[0-9][0-9]", module):
             continue # Ignore the default modules
-        if re.match(r"team_[0-9][0-9]_Wrapper", s):
+        if re.match(r"team_[0-9][0-9]_Wrapper", module):
             continue # Ignore the default modules
         # Condition 1: Module name should match the root of the filename (without extension)
         filename_without_extension = file.split('/')[-1].split('.')[0].split("/")[-1].split("\\")[-1]
