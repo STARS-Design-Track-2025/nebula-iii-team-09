@@ -24,7 +24,7 @@ jobs:
         # When merging teams' files together, common editing of files causes issues.
 
         # Commit with most up to date common files. Do not change unless you are working on the post-program integration team or have explicit permission from someone who is.
-        BASE_COMMIT="1ee10023ab63bcb9e9ca14395f2528c9bc29e181" #12/7/2024, "Fix python script path in workflow"
+        BASE_COMMIT="fc7de080cd0c597a709396057305574026a2bfdb" #12/7/2024, "Fix python script path in workflow"
         
         # Get list of changed files between the base commit and current commit
         git diff --name-only $BASE_COMMIT ${{ github.sha }} > changed_files.txt
