@@ -89,7 +89,7 @@ module team_00 (
     assign gpio_oeb = en ? '0 : '1;
 
     // Clock divider
-    flex_counter #(.NUM_CNT_BITS(28)) clk_divider (
+    t00_flex_counter #(.NUM_CNT_BITS(28)) clk_divider (
         .clk(clk),
         .nrst(nrst),
         .count_enable(enable),
@@ -100,7 +100,7 @@ module team_00 (
     );
 
     // Counter
-    flex_counter #(.NUM_CNT_BITS(6)) counter_to_35 (
+    t00_flex_counter #(.NUM_CNT_BITS(6)) counter_to_35 (
         .clk(clk),
         .nrst(nrst),
         .count_enable(clk_pulse),
@@ -110,8 +110,8 @@ module team_00 (
         .rollover_flag(done)
     );
 
-    // Decoder instantiation
-    decoder_for_GPIO decoder (
+    // decoder instantiation
+    t00_decoder_for_GPIO decoder (
         .in(count),
         .out(gpio)
     );

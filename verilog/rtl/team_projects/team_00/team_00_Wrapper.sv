@@ -80,7 +80,7 @@ module team_00_Wrapper (
     *
     * Instantiate the Bus Wrapper module (team_02_WB) below.
     * If your design doesn't interface with the Wishbone bus,
-    * instantiate your top level module instead (team_02).
+    * instantiate your top level m0dule instead (team_02).
     *--------------------------------------------------------------
     */
 

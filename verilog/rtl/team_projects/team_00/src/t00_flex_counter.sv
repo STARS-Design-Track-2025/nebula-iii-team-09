@@ -4,7 +4,7 @@
 // Author:      Miguel Isrrael Teran
 // Description: Flexible counter
 
-module flex_counter # (
+module t00_flex_counter # (
     parameter NUM_CNT_BITS = 4
 )
 (

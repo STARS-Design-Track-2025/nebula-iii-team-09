@@ -4,8 +4,8 @@
     "VERILOG_FILES": [
         "dir::../../verilog/rtl/wb_wrapper.vh",
         "dir::../../verilog/rtl/team_projects/team_00/team_00.sv",
-        "dir::../../verilog/rtl/team_projects/team_00/src/decoder_for_GPIO.sv",
-        "dir::../../verilog/rtl/team_projects/team_00/src/flex_counter.sv"
+        "dir::../../verilog/rtl/team_projects/team_00/src/t00_decoder_for_GPIO.sv",
+        "dir::../../verilog/rtl/team_projects/team_00/src/t00_flex_counter.sv"
     ],
     "CLOCK_PERIOD": 100,
     "CLOCK_PORT": "clk",
