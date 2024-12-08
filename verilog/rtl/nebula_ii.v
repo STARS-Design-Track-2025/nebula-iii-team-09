@@ -1,45 +1,44 @@
-// This is just the sample project right now
-// When testing your design, please replace it with your design's instance
+    // Please do not edit.  This file will automatically update when make nebula is called.
+    // It has dependencies of each of the teams' yaml files.  If the LA, or GPIO change significantly, 
+    // this script may need to be changed.  The relevant script is ./scripts/nebula_generation.py
+    module nebula (
+    `ifdef USE_POWER_PINS
+        inout vccd1,	// User area 1 1.8V supply
+        inout vssd1,	// User area 1 digital ground
+    `endif
 
-module nebula_ii (
-`ifdef USE_POWER_PINS
-    inout vccd1,	// User area 1 1.8V supply
-    inout vssd1,	// User area 1 digital ground
-`endif
+        // User clk, rst
+        input wb_clk_i,
+        input wb_rst_i,
 
-    // User clk, rst
-    input wb_clk_i,
-    input wb_rst_i,
+        // Wishbone Slave ports (WB MI A)
+        input wbs_stb_i,
+        input wbs_cyc_i,
+        input wbs_we_i,
+        input [3:0] wbs_sel_i,
+        input [31:0] wbs_dat_i,
+        input [31:0] wbs_adr_i,
+        output wbs_ack_o,
+        output [31:0] wbs_dat_o,
 
-    // Wishbone Slave ports (WB MI A)
-    input wbs_stb_i,
-    input wbs_cyc_i,
-    input wbs_we_i,
-    input [3:0] wbs_sel_i,
-    input [31:0] wbs_dat_i,
-    input [31:0] wbs_adr_i,
-    output wbs_ack_o,
-    output [31:0] wbs_dat_o,
+        // Logic Analyzer Signals
+        input  [127:0] la_data_in,
+        output [127:0] la_data_out,
+        input  [127:0] la_oenb,
 
-    // Logic Analyzer Signals
-    input  [127:0] la_data_in,
-    output [127:0] la_data_out,
-    input  [127:0] la_oenb,
+        // IOs, give all here, the wrapper will default 1:4 to unused (to make it easier for teams to change)
+        input  [37:0] io_in,
+        output [37:0] io_out,
+        output [37:0] io_oeb,
 
-    // IOs, give all here, the wrapper will default 1:4 to unused (to make it easier for teams to change)
-    input  [37:0] io_in,
-    output [37:0] io_out,
-    output [37:0] io_oeb,
-
-    // IRQ
-    output [2:0] irq,
+        // IRQ
+        output [2:0] irq,
+        
+        input en
+        //input [31:0] start_addr
+    );
     
-    input en
-    //input [31:0] start_addr
-);
-    
-    // Number of teams (only sample project for now)
-    // Replace sample project with your design for testing
+    // Number of teams
     localparam NUM_TEAMS = 12;
 
     //Synchronous rst for all the teams

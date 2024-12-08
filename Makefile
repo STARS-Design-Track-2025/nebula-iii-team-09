@@ -180,8 +180,8 @@ custom_run_verify =\
     export CORE_VERILOG_PATH=$(TARGET_PATH)/mgmt_core_wrapper/verilog &&\
     export CARAVEL_VERILOG_PATH=$(TARGET_PATH)/caravel/verilog &&\
     export MCW_ROOT=$(MCW_ROOT) &&\
-	export GCC_PREFIX=riscv64-unknown-elf &&\
-	export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
+	export GCC_PREFIX=riscv32-unknown-elf &&\
+	export GCC_PATH=/opt/riscv32/bin/ &&\
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
     cd verilog/dv/$* && export SIM=${SIM} && make
 # If you're Aidan, use this:
@@ -208,7 +208,7 @@ $(dv-targets-rtl): verify-%-rtl: $(dv_base_dependencies)
 	$(docker_run_verify)
 
 $(purdue-dv-targets-rtl): SIM=RTL
-$(purdue-dv-targets-rtl): purdue-verify-%-rtl: zicsr-fix
+$(purdue-dv-targets-rtl): purdue-verify-%-rtl: zicsr-fix nebula
 	@$(custom_run_verify) || ( echo "Please check to ensure march=rv32i_zicsr not march=rv32i: mgmt_core_wrapper/verilog/dv/make/var.makefile"; exit 1 )
 
 $(dv-targets-gl): SIM=GL
@@ -216,7 +216,7 @@ $(dv-targets-gl): verify-%-gl: $(dv_base_dependencies)
 	$(docker_run_verify)
 
 $(purdue-dv-targets-gl): SIM=GL
-$(purdue-dv-targets-gl): purdue-verify-%-gl: zicsr-fix
+$(purdue-dv-targets-gl): purdue-verify-%-gl: zicsr-fix nebula
 	$(custom_run_verify)
 
 $(dv-targets-gl-sdf): SIM=GL_SDF
@@ -492,10 +492,10 @@ bus-wrap-setup: check_dependencies
 	git checkout e468b6b
 
 #Generate YAML files for teams
-.PHONY: bus-wrap-initialize
-bus-wrap-initialize:
-	cd $(PWD)/verilog/rtl &&\
-	make initialize
+# .PHONY: bus-wrap-initialize
+# bus-wrap-initialize:
+# 	cd $(PWD)/verilog/rtl &&\
+# 	make initialize
 
 #Generate Bus Wrap Verilog files for teams
 .PHONY: bus-wrap-generate
@@ -558,3 +558,106 @@ sv2v:
 congestion_gui:
 	nix-shell --run "openroad -exit -no_splash -gui -metrics $(PWD)/openlane/tmp.json" --pure $(OPENLANE2_ROOT)/shell.nix
 	
+# Thanks to ChatGPT and Aidan Jacobsen for the following target
+# Examples:
+# "make init_team_00": Creates the required files for team_00 if they don't exist
+# "make init_team_00 pristine=1": Deletes and recreates the files for team_00
+.PHONY: init_team_%
+init_team_%:
+	@team_number=$(subst init_team_,,$@); \
+	echo "Attempting to initialize team_$$team_number"; \
+	pristine=0; \
+	# Check for --pristine argument \
+	if echo "$(pristine)" | grep -q -- '1'; then \
+		pristine=1; \
+	fi; \
+	# Validate team number format \
+	if ! echo "$$team_number" | grep -qE '^[0-9][0-9]$$'; then \
+		echo "\033[31mERROR\033[0m: The target must be of the format init_team_## with a 2-digit number."; \
+		exit 1; \
+	fi; \
+	# If pristine is set and the directory exists, delete it \
+	if [ $$pristine -eq 1 ] && [ -d "./verilog/rtl/team_projects/team_$$team_number" ]; then \
+		echo "Deleting existing directory ./verilog/rtl/team_projects/team_$$team_number"; \
+		rm -rf ./verilog/rtl/team_projects/team_$$team_number; \
+	fi; \
+	# If pristine is set and the directory exists, delete it \
+	if [ $$pristine -eq 1 ] && [ -d "./verilog/dv/team_$$team_number" ]; then \
+		echo "Deleting existing directory ./verilog/dv/team_$$team_number"; \
+		rm -rf ./verilog/dv/team_$$team_number; \
+	fi; \
+	# If pristine is set and the directory exists, delete it \
+	if [ $$pristine -eq 1 ] && [ -d "./openlane/team_$$team_number" ]; then \
+		echo "Deleting existing directory ./openlane/team_$$team_number"; \
+		rm -rf ./openlane/team_$$team_number; \
+	fi; \
+	# If the directory doesn't exist, create it and copy files \
+	if [ ! -d "./verilog/rtl/team_projects/team_$$team_number" ]; then \
+		if [ ! -d "./verilog/dv/team_$$team_number" ]; then \
+			if [ ! -d "./openlane/team_$$team_number" ]; then \
+				echo "Creating directory ./verilog/rtl/team_projects/team_$$team_number"; \
+				mkdir -p ./verilog/rtl/team_projects/team_$$team_number; \
+				echo "Creating directory ./verilog/rtl/team_projects/team_$$team_number/src"; \
+				mkdir -p ./verilog/rtl/team_projects/team_$$team_number/src; \
+				echo "Creating Makefile"; \
+				sed "s/##/$$team_number/g" ./template_files/Makefile_RTL > ./verilog/rtl/team_projects/team_$$team_number/Makefile; \
+				echo "Creating team_$$team_number.sv"; \
+				sed "s/##/$$team_number/g" ./template_files/team.sv > ./verilog/rtl/team_projects/team_$$team_number/team_$$team_number.sv; \
+				echo "Creating team_$$team_number"'_Wrapper.sv'; \
+				sed "s/##/$$team_number/g" ./template_files/team_Wrapper.sv > "./verilog/rtl/team_projects/team_$$team_number/team_$$team_number"'_Wrapper.sv'; \
+				echo "Creating team_$$team_number.yml"; \
+				sed "s/##/$$team_number/g" ./template_files/team.yml > ./verilog/rtl/team_projects/team_$$team_number/team_$$team_number.yml; \
+				echo "Creating includes"; \
+				sed "s/##/$$team_number/g" ./template_files/includes > ./verilog/rtl/team_projects/team_$$team_number/includes; \
+				echo "Creating directory ./verilog/dv/team_$$team_number"; \
+				mkdir -p ./verilog/dv/team_$$team_number; \
+				echo "Creating directory ./verilog/dv/team_$$team_number/module_tests"; \
+				mkdir -p ./verilog/dv/team_$$team_number/module_tests; \
+				echo "Creating ./verilog/dv/team_$$team_number/Makefile"; \
+				sed "s/##/$$team_number/g" ./template_files/Makefile_dv > ./verilog/dv/team_$$team_number/Makefile; \
+				echo "Creating ./verilog/dv/team_$$team_number/module_tests/Makefile"; \
+				sed "s/##/$$team_number/g" ./template_files/Makefile_dv_module > ./verilog/dv/team_$$team_number/module_tests/Makefile; \
+				echo "Creating ./verilog/dv/team_$$team_number/team_$$team_number"'_tb.v'; \
+				sed "s/##/$$team_number/g" ./template_files/team_tb.v > "./verilog/dv/team_$$team_number/team_$$team_number"'_tb.v'; \
+				echo "Creating ./verilog/dv/team_$$team_number/team_$$team_number.c"; \
+				sed "s/##/$$team_number/g" ./template_files/team.c > ./verilog/dv/team_$$team_number/team_$$team_number.c; \
+				echo "Creating directory ./openlane/team_$$team_number"; \
+				mkdir -p ./openlane/team_$$team_number; \
+				echo "Creating directory ./openlane/team_$$team_number/config.json"; \
+				sed "s/##/$$team_number/g" ./template_files/config.json > ./openlane/team_$$team_number/config.json; \
+				echo "\033[32mSUCCESS\033[0m: Initialization complete for team_$$team_number"; \
+			else \
+				echo "\033[31mERROR\033[0m: Directory ./opnelane/team_$$team_number already exists."; \
+				exit 1; \
+			fi \
+		else \
+			echo "\033[31mERROR\033[0m: Directory ./verilog/dv/team_$$team_number already exists."; \
+			exit 1; \
+		fi \
+	else \
+		echo "\033[31mERROR\033[0m: Directory ./verilog/rtl/team_projects/team_$$team_number already exists."; \
+		exit 1; \
+	fi
+
+.PHONY: nebula
+nebula: bus-wrap-generate
+	@python3 ./scripts/nebula_generation.py
+	@python3 ./scripts/includes_generation.py
+	@python3 ./scripts/config_generation.py
+
+# Example flow:
+# make init_team_00
+# Fill in team_00.yml
+# make bus-wrap-setup
+# Change the project info flags to select additional features
+# make bus-wrap-generate.  This updates the team_00.yml, team_00_WB.v, and team_00_Wrapper.sv
+# Create source files for verilog in src folder
+# Create a top level (team_00.sv), manually commenting / uncommenting the ports that you need
+# make nebula
+# Add src files to /openlane/team_00/config.json and /verilog/rtl/team_projects/team_00/includes
+# make team_00
+# make install
+# make purdue-setup
+# make purdue-verify-team_00-rtl
+# manually place macros in macro.cfg
+# make user_project_wrapper

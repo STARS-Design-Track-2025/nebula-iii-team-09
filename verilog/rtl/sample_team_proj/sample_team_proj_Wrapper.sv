@@ -8,6 +8,7 @@
 
 // Change Log:
 // Aidan Jacobsen, 06/15/2024, integrated with automated bus wrapping, moved ports internal so teams don't have to modify
+// Aidan Jacobsen, 12/07/2024, reworked to more closely match team format during file generation automation
 
 module sample_team_proj_Wrapper (
 `ifdef USE_POWER_PINS

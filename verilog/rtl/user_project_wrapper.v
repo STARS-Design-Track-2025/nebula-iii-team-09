@@ -78,7 +78,7 @@ module user_project_wrapper #(
     output [2:0] user_irq
 );
 
-nebula_ii mprj (
+nebula mprj (
 `ifdef USE_POWER_PINS
 	.vccd1(vccd1),	// User area 1 1.8V power
 	.vssd1(vssd1),	// User area 1 digital ground
