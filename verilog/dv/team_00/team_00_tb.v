@@ -26,7 +26,6 @@ module team_00_tb;
 	reg power3, power4;
 
 	wire gpio;
-	
 	wire [37:0] mprj_io;
 	wire [33:0] check_bits;
 	reg [33:0] expected_io;
