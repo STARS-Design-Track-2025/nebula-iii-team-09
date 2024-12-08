@@ -1,4 +1,4 @@
-module constant_0(
+module t03_constant_0(
     output logic out
 );
 
