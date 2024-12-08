@@ -51,6 +51,6 @@ module team_03 (
     assign gpio_out[33:1] = '0;
     assign gpio_oeb = '0;
 
-    constant_0 constant_0 (.out(gpio_out[0]));
+    t03_constant_0 t03_constant_0 (.out(gpio_out[0]));
 
 endmodule
