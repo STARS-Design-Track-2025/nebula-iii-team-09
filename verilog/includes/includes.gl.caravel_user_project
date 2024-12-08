@@ -27,3 +27,4 @@
 #-v $(USER_PROJECT_VERILOG)/gl/gpio_defaults_block_1803.v 
 
 -v $(USER_PROJECT_VERILOG)/gl/team_00.v
+-v $(USER_PROJECT_VERILOG)/gl/team_01.v

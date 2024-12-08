@@ -29,6 +29,7 @@
 /verilog/gl/includes.gl.caravel_user_project
 /verilog/rtl/nebula.v
 /openlane/user_project_wrapper/config.json
+openlane/user_project_wrapper/config.json
 /def/user_project_wrapper.def.gz
 /def/user_project_wrapper.def
 /gds/user_project_wrapper.gds
