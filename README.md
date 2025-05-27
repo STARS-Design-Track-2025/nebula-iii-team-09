@@ -13,8 +13,17 @@ Refer to [README](docs/source/index.rst) for this sample project documentation.
 
 Refer to the following [readthedocs](https://caravel-sim-infrastructure.readthedocs.io/en/latest/index.html) for how to add cocotb tests to your project. 
 
+## Getting Started (For Mentors)
 
-## Getting Started
+This repository should contain all of the instructions, base files, and scripts for an openlane2 caravel project.  
+Have the students follow the getting started (for students) section below and approve pull requests ONLY when the 
+team is completely done and has passed all of the checks.  The major requirements are that teams have a successful 
+testbench that PROGRAMMATICALLY tests their designs and that they pass some of the formatting checks.  If you (TAs) 
+discover issues during integration, please feel free to update / add to these formatting checks. At a bare minimum, 
+their test bench must fail if their design is not present in the design (this is a funny requirement, but we 
+have had multiple teams' test benches pass before with their entire design commented out ☺ ).
+
+## Getting Started (For Students)
 
 You will first need to create a fork of this repository.  You can fork it to our design-track organization or one of your personal accounts.
 
