@@ -600,7 +600,7 @@ init_team_%:
 				echo "Creating directory ./verilog/rtl/team_projects/team_$$team_number/src"; \
 				mkdir -p ./verilog/rtl/team_projects/team_$$team_number/src; \
 				echo "Creating Makefile"; \
-				sed "s/##/$$team_number/g" ./template_files/Makefile_RTL > ./verilog/rtl/team_projects/team_$$team_number/Makefile; \
+				sed "s/##/$$team_number/g" ./template_files/Makefile_rtl > ./verilog/rtl/team_projects/team_$$team_number/Makefile; \
 				echo "Creating team_$$team_number.sv"; \
 				sed "s/##/$$team_number/g" ./template_files/team.sv > ./verilog/rtl/team_projects/team_$$team_number/team_$$team_number.sv; \
 				echo "Creating team_$$team_number"'_Wrapper.sv'; \
