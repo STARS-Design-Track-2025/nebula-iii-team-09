@@ -552,13 +552,14 @@ congestion_gui:
 # Examples:
 # "make init_team_00": Creates the required files for team_00 if they don't exist
 # "make init_team_00 pristine=1": Deletes and recreates the files for team_00
+pristine ?= 0
 .PHONY: init_team_%
 init_team_%:
 	@team_number=$(subst init_team_,,$@); \
 	echo "Attempting to initialize team_$$team_number"; \
-	pristine=0; \
+	pristine="$(pristine)"; \
 	# Check for --pristine argument \
-	if echo "$(pristine)" | grep -q -- '1'; then \
+	if echo "$$pristine" | grep -q -- '1'; then \
 		pristine=1; \
 	fi; \
 	# Validate team number format \
