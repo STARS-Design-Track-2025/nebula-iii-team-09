@@ -1,10 +1,10 @@
-// STARS STUDENTS: DO NOT MODIFY!
+// STARS STUDENTS: DO NOT MANUALLY MODIFY! Run "make nebula" to generate. 
 
 // $Id: $
 // File name:   team_00_Wrapper.sv
 // Created:     05/26/2024
-// Author:      Abdulloh Abdubaev
-// Description: Sample Team Project Wrapper
+// Author:      Miguel Isrrael Teran
+// Description: Team 00 Project Wrapper
 
 // Change Log:
 // Aidan Jacobsen, 06/15/2024, integrated with automated bus wrapping, moved ports internal so teams don't have to modify

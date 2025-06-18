@@ -1,7 +1,7 @@
 /*
 	Copyright 2024 Purdue University
 
-	Author: Miguel Isrrael Teran, Aidan Jacobsen (misrrael@purdue.edu)
+	Author: Miguel Isrrael Teran, Aidan Jacobsen (misrrael@purdue.edu, jacobse7@purdue.edu)
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.

@@ -1,17 +1,16 @@
 info:
   name: team_##
   description: Sample Team Project for STARS students
-  repo: STARS-Design-Track-2024/Project_Template.git
+  repo: STARS-Design-Track-2025/nebula-iii.git
   owner: Purdue University
   license: APACHE 2.0
   author: Miguel Isrrael Teran, Aidan Jacobsen
-  email: misrrael@purdue.edu
+  email: misrrael@purdue.edu, jacobse7@purdue.edu
   version: v1.0.0
   date: 28-05-2024
   category: digital
   tags:
-    - counter
-    - sample project
+    - team_##
   bus:
     - wb
   type: soft
@@ -21,7 +20,7 @@ info:
   width: 0.0
   height: 0.0
   technology: N/A
-  clock_freq_mhz: 10
+  clock_freq_mhz: 40
   digital_supply_voltage: n/a
   analog_supply_voltage: n/a
 
@@ -127,7 +126,7 @@ registers:
     size: 1
     mode: w
     fifo: false
-    offset: 15 # Enter your team number here
+    offset: 0
     bit_access: false
     write_port: en
     description: Enables or disables team design

@@ -15,38 +15,38 @@
 
 `default_nettype none
 
-`timescale 1 ns / 1 ps
+`timescale 1 ns / 100 ps
 
 module team_##_tb;
+	// Signals declaration
 	reg clock;
 	wire clock_in;
 	reg RSTB;
 	reg CSB;
 	reg power1, power2;
-	reg power3, power4;
 
 	wire gpio;
 	wire [37:0] mprj_io;
 	wire [33:0] check_bits;
 	reg [37:0] mprj_io_in;
 
-	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
+	// Signals assignments
 	assign check_bits = {mprj_io[37:5], mprj_io[0]};
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	assign clock_in = clock;
-	assign mprj_io[19:16] = mprj_io_in[19:16];
 
-	// External clock is used by default.  Make this artificially fast for the
-	// simulation.  Normally this would be a slow clock and the digital PLL
-	// would be the fast clock.
-
-	always #12.5 clock <= (clock === 1'b0);
-
+	// External clock generation
+	always #50 clock <= (clock === 1'b0);
+	// Initialize the clock at 0
 	initial begin
 		clock = 0;
 	end
 
+	// NOTE: The external clock is 10 MHz, but the clock for the user 
+	// project will be configured to 40 MHz using the digital PLL.
+	// Hence, your design will be clocked at 40 MHz.
 
+	// STUDENTS: This block here is important, don't erase it! However, don't worry about trying to understand it
 	`ifdef ENABLE_SDF
 		initial begin
 			$sdf_annotate("../../../sdf/user_proj_example.sdf", uut.mprj) ;
@@ -142,20 +142,20 @@ module team_##_tb;
 		end
 	`endif 
 
+	// Signal dump and timeout check
 	initial begin
 		$dumpfile("team_##.vcd");
-		$dumpvars(0, team_##_tb);
+		$dumpvars(0, team_##_tb.mprj_io, team_##_tb.uut.chip_core.mprj);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (100) begin
+		repeat (1000) begin
 			repeat (1000) @(posedge clock);
-			$display("+1000 cycles");
 		end
 		$display("%c[1;31m",27);
 		`ifdef GL
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (GL) Failed");
+			$display ("Monitor: Timeout, NEBULA Team ## (GL) Failed");
 		`else
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
+			$display ("Monitor: Timeout, NEBULA Team ## (RTL) Failed");
 		`endif
 		$display("%c[0m",27);
 		$finish;
@@ -163,17 +163,27 @@ module team_##_tb;
 
 	// Main Test Bench Process
 	initial begin
-		// Wait for design to be enabled
-		// wait(uut.mprj.mprj.team_##_Wrapper.team_##_WB.instance_to_wrap.\en == 1);
-		// #(2500);
 
+		// *******************************
+		// WRITE TESTBENCH HERE!!
+		// 
+		// Wait for design to be enabled
+		// before doing any checks
+		// *******************************
 		
-		// `ifdef GL
-	    // 	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
-		// `else
-		//     $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
-		// `endif
-	    // $finish;
+		$display("%c[1;32m",27);
+		`ifdef GL
+	    	$display("Monitor: NEBULA Team ## (GL) Passed");
+		`else
+		    $display("Monitor: NEBULA Team ## (RTL) Passed");
+		`endif
+		$display("%c[0m",27);
+	    $finish;
+	end
+
+	// Print output after there is a change in the GPIO pins
+	always @(mprj_io) begin
+		#1 $display("{GPIO[37:5], GPIO[0]} = 34'h%h ", check_bits);
 	end
 
 	// Reset Operation
@@ -182,7 +192,7 @@ module team_##_tb;
 		CSB  <= 1'b1;		// Force CSB high
 		#2000;
 		RSTB <= 1'b1;	    	// Release reset
-		#100000;
+		#(100000);
 		CSB = 1'b0;		// CSB can be released
 	end
 
@@ -207,6 +217,7 @@ module team_##_tb;
 	wire VDD1V8 = power2;
 	wire VSS = 1'b0;
 
+	// Caravel instance
 	caravel uut (
 		.vddio	  (VDD3V3),
 		.vddio_2  (VDD3V3),
@@ -236,6 +247,7 @@ module team_##_tb;
 		.resetb	  (RSTB)
 	);
 
+	// SPI flash instance
 	spiflash #(
 		.FILENAME("team_##.hex")
 	) spiflash (

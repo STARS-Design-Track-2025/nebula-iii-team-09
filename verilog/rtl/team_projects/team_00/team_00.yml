@@ -1,17 +1,16 @@
 info:
   name: team_00
   description: Sample Team Project for STARS students
-  repo: STARS-Design-Track-2024/Project_Template.git
+  repo: STARS-Design-Track-2025/nebula-iii.git
   owner: Purdue University
   license: APACHE 2.0
   author: Miguel Isrrael Teran, Aidan Jacobsen
-  email: misrrael@purdue.edu
+  email: misrrael@purdue.edu, jacobse7@purdue.edu
   version: v1.0.0
   date: 28-05-2024
   category: digital
   tags:
-    - counter
-    - sample project
+    - team_00
   bus:
     - wb
   type: soft
@@ -21,7 +20,7 @@ info:
   width: 0.0
   height: 0.0
   technology: N/A
-  clock_freq_mhz: 10
+  clock_freq_mhz: 40
   digital_supply_voltage: n/a
   analog_supply_voltage: n/a
 
@@ -29,7 +28,7 @@ info:
 # the Wishbone bus or the Logic Analyzer.  If you switch
 # these, just rerun "make bus-wrap-generate"
 # To use either of these, you will also need to uncomment 
-# the corresponding lines in team_##.sv.
+# the corresponding lines in team_00.sv.
 project_info:
   wb_master_enabled: False
   la_enabled: True
@@ -110,11 +109,6 @@ external_interface:
 #    width: 1
 #    direction: output
 #    description: Wishbone Master Signals
-  # - name: n_rst
-  #   port: n_rst
-  #   width: 1
-  #   direction: input
-  #   description: Asynchronous Reset signal
 
 clock:
   name: clk

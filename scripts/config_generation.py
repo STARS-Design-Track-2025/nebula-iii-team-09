@@ -64,7 +64,7 @@ f"""
         "dir::../../verilog/rtl/user_project_wrapper.v"
     ],
     "ROUTING_CORES": 6,
-    "CLOCK_PERIOD": 100,
+    "CLOCK_PERIOD": 25,
     "CLOCK_PORT": "wb_clk_i",
     "CLOCK_NET": "wb_clk_i",
     "ERROR_ON_KLAYOUT_DRC": false,

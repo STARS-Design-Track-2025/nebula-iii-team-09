@@ -41,6 +41,7 @@ endif
 # 	-v $$(realpath $(PWD)/..):$$(realpath $(PWD)/..) \
 # 	-v $(PDK_ROOT):$(PDK_ROOT) \
 # 	-v $(CARAVEL_ROOT):$(CARAVEL_ROOT) \
+# 	-v $(HOME)/.ipm:$(HOME)/.ipm \
 # 	-v $(OPENLANE_ROOT):/openlane
 
 # docker_env = \
@@ -67,7 +68,7 @@ endif
 
 # .PHONY: $(designs)
 # $(designs) : export current_design=$@
-# $(designs) : % : ./%/config.json
+# $(designs) : % : ./%/config.json enable-openlane-pdk
 # ifneq (,$(wildcard ./$(current_design)/interactive.tcl))
 # 	$(docker_run) \
 # 		$(OPENLANE_IMAGE_NAME) sh -c $(openlane_cmd_interactive)
@@ -83,6 +84,10 @@ endif
 # 	@cp ./$*/runs/$*/OPENLANE_VERSION ../signoff/$*/
 # 	@cp ./$*/runs/$*/PDK_SOURCES ../signoff/$*/
 # 	@cp ./$*/runs/$*/reports/*.csv ../signoff/$*/
+
+# .PHONY: enable-openlane-pdk
+# enable-openlane-pdk:
+# 	$(UPRJ_ROOT)/venv/bin/ciel enable $(OPEN_PDKS_COMMIT)
 
 # .PHONY: openlane
 # openlane: check-openlane-env
@@ -133,16 +138,20 @@ endif
 openlane_cmd = \
 	"openlane \
 	--run-tag $(OPENLANE_RUN_TAG) \
+	--pdk-root $(PDK_ROOT) \
 	$*/config.json"
 openlane_cmd_interactive = "flow.tcl -it -file $$(realpath ./$*/interactive.tcl)"
-
 
 list:
 	@echo $(designs)
 
+.PHONY: enable-openlane-pdk
+enable-openlane-pdk:
+	$(UPRJ_ROOT)/venv/bin/volare enable $(OPEN_PDKS_COMMIT)
+
 .PHONY: $(designs)
 $(designs) : export current_design=$@
-$(designs) : % : ./%/config.json
+$(designs) : % : ./%/config.json enable-openlane-pdk
 	mkdir -p ./$*/runs/$(OPENLANE_RUN_TAG) 
 	rm -rf ./$*/runs/$*
 	ln -s $$(realpath ./$*/runs/$(OPENLANE_RUN_TAG)) ./$*/runs/$*

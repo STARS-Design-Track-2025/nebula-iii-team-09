@@ -20,13 +20,14 @@
 #include <stub.c>
 
 // List of Wishbone Slave Addresses
-// Sample Project                                        0x300TXXXX //T must match team number, XXXX can be anything divisible by 4
-#define reg_sample_proj_EN (*(volatile uint32_t*)        0x30000000)
-#define reg_sample_proj_PRESCALER (*(volatile uint32_t*) 0x30000004)
-#define reg_sample_proj_IM (*(volatile uint32_t*)        0x3000FF00)
-#define reg_sample_proj_MIS (*(volatile uint32_t*)       0x3000FF04)
-#define reg_sample_proj_RIS (*(volatile uint32_t*)       0x3000FF08)
-#define reg_sample_proj_IC (*(volatile uint32_t*)        0x3000FF0C)
+
+// Change this to 300X0000 where X is your team number
+#define reg_team_00_EN (*(volatile uint32_t*)0x30000000)
+#define reg_team_00_PRESCALER (*(volatile uint32_t*) 0x30000004)
+#define reg_team_00_IM (*(volatile uint32_t*)        0x3000FF00)
+#define reg_team_00_MIS (*(volatile uint32_t*)       0x3000FF04)
+#define reg_team_00_RIS (*(volatile uint32_t*)       0x3000FF08)
+#define reg_team_00_IC (*(volatile uint32_t*)        0x3000FF0C)
 
 // GPIO Control
 #define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
@@ -42,12 +43,6 @@
 #define sram_space (*(volatile uint32_t*)0x33000000)
 
 /*
-	IO Test:
-		- Configures MPRJ lower 8-IO pins as outputs
-		- Observes counter value through the MPRJ lower 8 IO pins (in the testbench)
-*/
-
-/*
 	Sample Team Project Test:
 		- Configures all IO pins as outputs
 		- Configures all IO and LA pins to be selected by sample project
@@ -60,6 +55,21 @@
 
 void main()
 {
+	/* 
+	IO Control Registers
+	| DM     | VTRIP | SLOW  | AN_POL | AN_SEL | AN_EN | MOD_SEL | INP_DIS | HOLDH | OEB_N | MGMT_EN |
+	| 3-bits | 1-bit | 1-bit | 1-bit  | 1-bit  | 1-bit | 1-bit   | 1-bit   | 1-bit | 1-bit | 1-bit   |
+
+	Output: 0000_0110_0000_1110  (0x1808) = GPIO_MODE_USER_STD_OUTPUT
+	| DM     | VTRIP | SLOW  | AN_POL | AN_SEL | AN_EN | MOD_SEL | INP_DIS | HOLDH | OEB_N | MGMT_EN |
+	| 110    | 0     | 0     | 0      | 0      | 0     | 0       | 1       | 0     | 0     | 0       |
+	
+	 
+	Input: 0000_0001_0000_1111 (0x0402) = GPIO_MODE_USER_STD_INPUT_NOPULL
+	| DM     | VTRIP | SLOW  | AN_POL | AN_SEL | AN_EN | MOD_SEL | INP_DIS | HOLDH | OEB_N | MGMT_EN |
+	| 001    | 0     | 0     | 0      | 0      | 0     | 0       | 0       | 0     | 1     | 0       |
+
+	*/
 
 	/* Set up the housekeeping SPI to be connected internally so	*/
 	/* that external pin changes don't affect it.			*/
@@ -116,14 +126,35 @@ void main()
 	reg_mprj_xfer = 1;
 	while (reg_mprj_xfer == 1);
 
+	// ****************************************
+	// PLL Configuration (Configure to 40 MHz)
+	// ****************************************
+
+	// Set PLL enable, no DCO mode
+    reg_hkspi_pll_ena = 0x1;
+
+	// Set both PLL output dividers to 4
+    reg_hkspi_pll_source = 0x24;
+
+	// Write 16 to feedback divider
+    reg_hkspi_pll_divider = 0x10;
+
+	// Disable PLL bypass
+    reg_hkspi_pll_bypass = 0x0;
+
 	// Configure All LA probes as inputs to the cpu 
 	reg_la0_oenb = reg_la0_iena = 0x00000000;    // [31:0]
 	reg_la1_oenb = reg_la1_iena = 0x00000000;    // [63:32]
 	reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
-	// Configure GPIOs outputs to be selected by sample project
-	reg_gpio_PIN_0TO7 = 0x00000000;//team 1 would be all 1s, team 2 would be all 2s
+	// Configure GPIOs outputs to be selected by your team.
+	// To do this, you must change each of the digits below to your team number in Hex.
+	// e.g. if you are Team 11, change the first reg to 0xBBBBBBBB
+	// Each nibble is used by the GPIO control unit to determine the which input to the GPIO
+	// controls the output.  This allows for multiple projects to interface with the outside world
+	// simultaneously if desired.
+	reg_gpio_PIN_0TO7 = 0x00000000;
 	reg_gpio_PIN_8TO15 = 0x00000000;
 	reg_gpio_PIN_16TO23 = 0x00000000;
 	reg_gpio_PIN_24TO31 = 0x00000000;
@@ -131,30 +162,31 @@ void main()
 
 	// Configure LA output to be selected by sample project
 	reg_la_sel = 0x0;
-
-	// Enable the sample project design
-	reg_sample_proj_EN = 0x1;
-
+	
+	// Enable your design
+	reg_team_00_EN = 1;
+	
 	// Enable interrupt mask
-	reg_sample_proj_IM = 0x1;
+	reg_team_00_IM = 0x1;
 
 	// Set "prescaler" value to 1
-	reg_sample_proj_PRESCALER = 0x1;
+	reg_team_00_PRESCALER = 0x1;
 
 	// Configure LA[0] LA[1] as outputs from the cpu
 	reg_la0_oenb = reg_la0_iena = 0x00000003;
 
 	// Normal design operation
 	while (1) {
-		if (reg_sample_proj_MIS == 0x1) {  // if all outputs have been set high
+		if (reg_team_00_MIS == 0x1) {  // if all outputs have been set high
 			reg_la0_data = 0x3;  // set "stop" high
-			reg_sample_proj_IC = 0x1;  // "acknowledge" interrupt
+			reg_team_00_IC = 0x1;  // "acknowledge" interrupt
 		}
 		else if (reg_mprj_datah == 0) {
 			reg_la0_data = 0x1;  // Set "enable" high
 		}
 	}
 
+	// If you're using SRAM, you can add reads and writes here
 
 	// Add some extra instructions because GL sims are buggy. This has to do with the instruction cache 
 	// trying to read from undefined memory in anticipation of having more instructions
@@ -170,4 +202,3 @@ void main()
 	reg_gpio_PIN_32TO37 = 0x000000;
 	reg_gpio_PIN_32TO37 = 0x000000;
 }
-

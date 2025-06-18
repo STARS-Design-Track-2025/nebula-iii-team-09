@@ -6,6 +6,9 @@
 *.lst
 *.vcd
 *.gtkw
+*.elf
+*.hex
+*.hexe
 /env
 /venv
 /caravel

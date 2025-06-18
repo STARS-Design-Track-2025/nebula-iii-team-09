@@ -1,5 +1,3 @@
-// STARS STUDENTS: TAKE LOOK AT THIS SAMPLE PROJECT FOR REFERENCE
-
 // $Id: $
 // File name:   team_00.sv
 // Created:     5/23/2024
@@ -45,10 +43,6 @@ module team_00 (
     output logic [31:0] la_data_out,
     input logic [31:0] la_oenb,
 
-    // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
-    input  logic [33:0] gpio_in, // Breakout Board Pins
-    output logic [33:0] gpio_out, // Breakout Board Pins
-    output logic [33:0] gpio_oeb, // Active Low Output Enable
 
     // Wishbone master interface
     // output wire [31:0] ADR_O,
@@ -58,8 +52,12 @@ module team_00 (
     // output wire        STB_O,
     // output wire        CYC_O,
     // input wire [31:0]  DAT_I,
-    // input wire         ACK_I
+    // input wire         ACK_I,
 
+    // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
+    input  logic [33:0] gpio_in, // Breakout Board Pins
+    output logic [33:0] gpio_out, // Breakout Board Pins
+    output logic [33:0] gpio_oeb, // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the

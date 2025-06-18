@@ -11,7 +11,8 @@ generate_wb_yaml:
     fi
 
 
-#This removes the team_00_proj_WB.v file and generates a new one using the yml in this directory
+# This removes the team_00_proj_WB.v file and generates a new one using the yml in this directory
+# It also adds power pins to the generated wrapper
 .PHONY: generate_wb_wrapper
 generate_wb_wrapper:
 	@python3 ../../../../scripts/team_configuration.py --yaml $(PWD)/team_00.yml --wrapper $(PWD)/team_00_Wrapper.sv
@@ -44,3 +45,4 @@ generate_wb_wrapper:
 		sed 's/output\s\+wire\s\+\[34-1:0\]\s\+gpio_oeb/output wire [34-1:0] gpio_oeb,\ninput wire nrst/' $(TEAM_PROJECT_FOLDER_NAME)_WB.v > $(TEAM_PROJECT_FOLDER_NAME)_WB_modified.v; \
 		rm $(TEAM_PROJECT_FOLDER_NAME)_WB.v; \
 		mv $(TEAM_PROJECT_FOLDER_NAME)_WB_modified.v $(TEAM_PROJECT_FOLDER_NAME)_WB.v; \
+

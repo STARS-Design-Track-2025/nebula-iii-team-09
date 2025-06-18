@@ -1,5 +1,3 @@
-// STARS STUDENTS: TAKE LOOK AT THIS SAMPLE PROJECT FOR REFERENCE
-
 // $Id: $
 // File name:   team_##.sv
 // Created:     
