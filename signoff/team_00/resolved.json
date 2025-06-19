@@ -239,7 +239,7 @@
     "STA_THREADS": null,
     "FP_SIZING": "absolute",
     "FP_ASPECT_RATIO": 1,
-    "FP_CORE_UTIL": 9,
+    "FP_CORE_UTIL": 20,
     "FP_OBSTRUCTIONS": null,
     "PL_SOFT_OBSTRUCTIONS": null,
     "CORE_AREA": null,
