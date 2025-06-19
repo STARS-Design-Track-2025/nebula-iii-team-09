@@ -1,9 +1,7 @@
 name: Run STARS Submission Checks
-# Improvements
-# ------------
-# Change disallowed file script to allow folders to be blocked
-# Determine which files should be in disallowed files script
 
+# Change Log:
+# Miguel Isrrael Teran, 06/19/2025, Added support for blocked files AND folders
 
 on: [push, pull_request]  # Trigger on push and PRs
 # on: [pull_request]  # Trigger on PRs
@@ -25,88 +23,81 @@ jobs:
 
         # Commit with most up to date common files. Do not change unless you are working on the post-program integration team or have explicit permission from someone who is.
         BASE_COMMIT="e02df2279b75ea3b0469090fa61f8be337e38b34" #6/19/2025
-        
+
         # Get list of changed files between the base commit and current commit
-        git diff --name-only $BASE_COMMIT ${{ github.sha }} > changed_files.txt
-        
+        git diff --name-only $BASE_COMMIT > changed_files.txt
+
         # List of files teams shouldn't change
         BLOCKED_FILES=(".github/scripts/requirements.txt" \
-                        "verilog/rtl/Makefile" \
-                        "verilog/includes/includes.rtl.global" \
-                        "verilog/includes/includes.gl.global" \
-                        "verilog/rtl/ffram/ffram_WB_Wrapper.sv" \
-                        "verilog/rtl/ffram/ffram_WB.sv" \
-                        "verilog/rtl/ffram/ffram.sv" \
-                        "verilog/rtl/ffram/ffram.yml" \
-                        "verilog/rtl/ffram/ffram.yml" \
-                        "verilog/rtl/gpio_control/gpio_control_WB.sv" \
-                        "verilog/rtl/gpio_control/gpio_control_WB.v" \
-                        "verilog/rtl/gpio_control/gpio_control_Wrapper.v" \
-                        "verilog/rtl/gpio_control/gpio_control.sv" \
-                        "verilog/rtl/gpio_control/gpio_control.yml" \
-                        "verilog/rtl/la_control/la_control_WB.v" \
-                        "verilog/rtl/la_control/la_control_Wrapper.v" \
-                        "verilog/rtl/la_control/la_control.sv" \
-                        "verilog/rtl/la_control/la_control.yml" \
-                        "verilog/rtl/wishbone_interconnect/wishbone_arbitrator.sv" \
-                        "verilog/rtl/wishbone_interconnect/wishbone_decoder.sv" \
-                        "verilog/rtl/wishbone_manager/wishbone_manager.sv" \
-                        "verilog/rtl/wb_wrapper.vh" \
-                        "verilog/rtl/wb_interconnect.sv" \
-                        "verilog/rtl/user_project_wrapper.v" \
-                        "verilog/rtl/defines.v" \
-                        "verilog/rtl/team_projects/team_00/src/t00_decoder_for_GPIO.sv" \
-                        "verilog/rtl/team_projects/team_00/src/t00_flex_counter.sv" \
-                        "verilog/rtl/team_projects/team_00/includes" \
-                        "verilog/rtl/team_projects/team_00/includes" \
-                        "verilog/rtl/team_projects/team_00/Makefile" \
-                        "verilog/rtl/team_projects/team_00/team_00_WB.v" \
-                        "verilog/rtl/team_projects/team_00/team_00_Wrapper.sv" \
-                        "verilog/rtl/team_projects/team_00/team_00.sv" \
-                        "verilog/rtl/team_projects/team_00/team_00.yml" \
-                        "verilog/dv/make/sim.makefile" \
-                        "verilog/dv/team_00/module_tests/Makefile" \
-                        "verilog/dv/team_00/Makefile" \
-                        "verilog/dv/team_00/team_00_tb.v" \
-                        "verilog/dv/team_00/team_00.c" \
+                        "template_files/" \
+                        "scripts/" \
+                        "lvs/" \
                         "Makefile" \
-                        "verilog/Makefile" \
+                        "integration_gitignore" \
+
+                        "verilog/rtl/ffram/" \
+                        "verilog/rtl/gpio_control/" \
+                        "verilog/rtl/la_control/" \
+                        "verilog/rtl/wishbone_interconnect/" \
+                        "verilog/rtl/wishbone_manager/" \
+                        "verilog/rtl/team_projects/team_00/" \
+                        "verilog/rtl/Makefile" \
+                        "verilog/rtl/defines.v" \
+                        "verilog/rtl/uprj_netlists.v" \
+                        "verilog/rtl/user_defines.v" \
+                        "verilog/rtl/user_project_wrapper.v" \
+                        "verilog/rtl/wb_interconnect.sv" \
+                        "verilog/rtl/wb_wrapper.vh" \
+                        "verilog/dv/cocotb/" \
+                        "verilog/dv/make/" \
+                        "verilog/dv/team_00/" \
                         "verilog/dv/Makefile" \
-                        "template_files/config.json" \
-                        "template_files/includes" \
-                        "template_files/Makefile_dv" \
-                        "template_files/Makefile_dv_module" \
-                        "template_files/Makefile_rtl" \
-                        "template_files/team_tb.v" \
-                        "template_files/team_Wrapper.sv" \
-                        "template_files/team.c" \
-                        "template_files/team.sv" \
-                        "template_files/team.yml" \
+                        "verilog/dv/README.md" \
+                        "verilog/dv/local-install.md" \
+                        "verilog/dv/setup-cocotb.py" \
+                        "verilog/dv/tb_macros.vh" \
+                        "verilog/dv/wb_tasks.vh" \
+                        "verilog/includes/" \
+
+                        "openlane/user_project_wrapper/fixed_dont_change/" \
+                        "openlane/user_project_wrapper/vsrc/" \
+                        "openlane/user_project_wrapper/base_user_project_wrapper.sdc" \
                         "openlane/user_project_wrapper/config.json" \
+                        "openlane/user_project_wrapper/pin_order.cfg" \
                         "def/user_project_wrapper.def" \
-                        "gds/user_project_wrapper.gz.gds" \
+                        "gds/user_project_wrapper*" \
                         "lef/user_project_wrapper.lef" \
                         "lib/user_project_wrapper.lib" \
-                        "mag/user_project_wrapper.mag" \
-                        "mag/user_project_wrapper.gz.mag" \
+                        "mag/user_project_wrapper.*" \
                         "sdc/user_project_wrapper.sdc" \
                         "spef/user_project_wrapper.spef" \
-                        "spef/multicorner/user_project_wrapper.min.spef" \
-                        "spef/multicorner/user_project_wrapper.max.spef" \
-                        "spef/multicorner/user_project_wrapper.nom.spef" \
+                        "spef/multicorner/user_project_wrapper*" \
                         "spi/user_project_wrapper.spi" \
+                        "signoff/user_project_wrapper/" \
+
+                        "openlane/ffram/" \
                         "def/ffram.def" \
-                        "gds/ffram.gz.gds" \
+                        "gds/ffram*" \
                         "lef/ffram.lef" \
                         "lib/ffram.lib" \
-                        "mag/ffram.mag" \
-                        "mag/ffram.gz.mag" \
+                        "mag/ffram*" \
                         "sdc/ffram.sdc" \
                         "spef/ffram.spef" \
-                        "spef/multicorner/ffram.min.spef" \
-                        "spef/multicorner/ffram.max.spef" \
-                        "spef/multicorner/ffram.nom.spef" \
+                        "spef/multicorner/ffram*" \
                         "spi/ffram.spi" \
+                        "signoff/ffram/" \
+
+                        "openlane/team_00/" \
+                        "def/team_00.def" \
+                        "gds/team_00*" \
+                        "lef/team_00.lef" \
+                        "lib/team_00.lib" \
+                        "mag/team_00*" \
+                        "sdc/team_00.sdc" \
+                        "spef/team_00.spef" \
+                        "spef/multicorner/team_00*" \
+                        "spi/team_00.spi" \
+                        "signoff/team_00/" \
                         )
 
         # Initialize a flag to detect if any disallowed files were changed
@@ -115,18 +106,28 @@ jobs:
         echo "Checking for blocked files..."
 
         # Check each file and list problems
-        for FILE in "${BLOCKED_FILES[@]}"; do
-          if grep -qx "$FILE" changed_files.txt; then
-            echo "ERROR: Commit includes changes to shared file: $FILE"
-            DISALLOWED_FILE_CHANGE_FOUND=true
-          fi
-        done
+        # Check each file and list problems
+        while IFS= read -r CHANGED_FILE; do
+            for BLOCKED in "${BLOCKED_FILES[@]}"; do
+                # Folder match (trailing slash)
+                if [[ "$BLOCKED" == */ && "$CHANGED_FILE" == "$BLOCKED"* ]]; then
+                    echo "ERROR: Commit includes changes inside blocked folder: $CHANGED_FILE (matched folder: $BLOCKED)"
+                    DISALLOWED_FILE_CHANGE_FOUND=true
+
+                # Wildcard or exact match
+                elif [[ "$CHANGED_FILE" == $BLOCKED ]]; then
+                    echo "ERROR: Commit includes changes to blocked file: $CHANGED_FILE (matched pattern: $BLOCKED)"
+                    DISALLOWED_FILE_CHANGE_FOUND=true
+                fi
+            done
+        done < changed_files.txt
+
 
         if [ "$DISALLOWED_FILE_CHANGE_FOUND" = true ]; then
-          echo "Push includes blocked files. Failing the workflow."
-          exit 1
+            echo "Push includes blocked files. Failing the workflow."
+            exit 1
         else
-          echo "No blocked files were changed."
+            echo "No blocked files were changed."
         fi
 
     - name: Set up Python
