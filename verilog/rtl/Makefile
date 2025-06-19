@@ -1,6 +1,6 @@
 
 # Designs for bus wrap generation and initialization
-PATTERNS = ffram gpio_control la_control $(addprefix team_projects/, $(basename $(notdir $(shell find ./team_projects -mindepth 1 -maxdepth 1 -type d))))
+PATTERNS = gpio_control la_control $(addprefix team_projects/, $(basename $(notdir $(shell find ./team_projects -mindepth 1 -maxdepth 1 -type d))))
 
 #Bus Wrap Initialize
 .PHONY: initialize

@@ -4,9 +4,9 @@ Clock Skew (Hold)
 ============================================================================
 ======================= min_ff_n40C_1v95 Corner ===================================
 
-Clock wb_clk_i
-1.068758 source latency _22114_/CLK ^
--1.068758 target latency _22114_/CLK ^
+Clock clk
+1.167858 source latency _22510_/CLK ^
+-1.167858 target latency _22510_/CLK ^
 -0.250000 clock uncertainty
 0.000000 CRPR
 --------------

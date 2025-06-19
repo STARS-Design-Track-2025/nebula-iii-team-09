@@ -36,6 +36,7 @@ def main():
     "DESIGN_NAME": "user_project_wrapper",
     "VERILOG_FILES": [
         "dir::../../verilog/rtl/wb_wrapper.vh",
+        "dir::../../verilog/rtl/ffram/ffram_WB_Wrapper.sv",
         "dir::../../verilog/rtl/gpio_control/gpio_control_WB.sv",
         "dir::../../verilog/rtl/gpio_control/gpio_control_Wrapper.v",
         "dir::../../verilog/rtl/gpio_control/gpio_control.sv",
@@ -81,7 +82,7 @@ f"""
     
         f.write(\
 """                
-        "mprj.ffram vccd1 vssd1 vccd1 vssd1"
+        "mprj.ffram.ffram_inst vccd1 vssd1 vccd1 vssd1"
     ],
     "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
     "MAGIC_DEF_LABELS": 0,

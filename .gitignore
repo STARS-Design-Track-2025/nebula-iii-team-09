@@ -26,7 +26,6 @@
 /verilog/dv/*.vvp
 /verilog/dv/team_*/team*.vvp
 /verilog/dv/team_*/team*.vcd.hier
-/verilog/gl/ffram.v
 /verilog/gl/user_project_wrapper.v
 /verilog/includes/includes.rtl.caravel_user_project
 /verilog/includes/includes.gl.caravel_user_project
@@ -46,15 +45,3 @@ openlane/user_project_wrapper/config.json
 /spef/user_project_wrapper.spef
 /spef/multicorner/user_project_wrapper.*.spef
 /spi/user_project_wrapper.spi
-/def/ffram.def
-/gds/ffram.gds
-/gds/ffram.gds.gz
-/lef/ffram.lef
-/lib/ffram.lib
-/mag/ffram.mag
-/mag/ffram.mag.gz
-/sdc/ffram.sdc
-/signoff/ffram/*
-/spef/ffram.spef
-/spef/multicorner/ffram.*.spef
-/spi/ffram.spi
