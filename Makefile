@@ -554,7 +554,7 @@ tbsim-source-%:
 # Example target: make cram_team_00
 .PHONY: cram_%
 cram_%:
-	export BUILD=verilog/rtl/team_projects/$*/build &&\
+	@export BUILD=verilog/rtl/team_projects/$*/build &&\
 	export ICE=fpga_support/ice40hx8k.sv &&\
 	export UART=fpga_support/uart/* &&\
 	export PINMAP=fpga_support/pinmap.pcf &&\
