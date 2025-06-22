@@ -18,6 +18,7 @@
 /venv-cocotb
 *.vpd
 *.key
+/verilog/rtl/team_projects/*/build
 /verilog/dv/*/module_tests/sim_build
 /verilog/dv/*/module_tests/DVEfiles
 /verilog/dv/*/module_tests/.restartSimSession.tcl.old

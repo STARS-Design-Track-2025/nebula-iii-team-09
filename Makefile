@@ -15,6 +15,13 @@
 # SPDX-License-Identifier: Apache-2.0
 MAKEFLAGS+=--warn-undefined-variables
 
+# Do the following when working in "eceprog" or in a Purdue ECE Lab
+ifeq ($(shell bash -c '[ -n "$$HOSTNAME" ] && [[ "$$HOSTNAME" == ecelnx* || "$$HOSTNAME" == eceprog* ]] && echo yes'),yes)
+# To have access to ECE 270 tool binaries
+export PATH := /home/shay/a/ece270/bin:$(PATH)
+export LD_LIBRARY_PATH := /home/shay/a/ece270/lib:$(LD_LIBRARY_PATH)
+endif
+
 export CARAVEL_ROOT?=$(PWD)/caravel
 export UPRJ_ROOT?=$(PWD)
 PRECHECK_ROOT?=${HOME}/mpw_precheck
@@ -130,7 +137,7 @@ setup: check_dependencies install check-env install_mcw openlane pdk-with-volare
 
 .PHONY: purdue-setup
 purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup
-	@echo -e "\033[0;32mSetup complete!!\n\033[0m"
+	@echo "\033[0;32mSetup complete!!\n\033[0m"
 
 # Openlane
 blocks=$(shell cd openlane && find * -maxdepth 0 -type d)
@@ -507,7 +514,7 @@ bus-wrap-setup: check_dependencies
 		cd BusWrap; \
 		git checkout e468b6b; \
 	else \
-		echo -e "\nBusWrap is already set up!\n"; \
+		echo "\nBusWrap is already set up!\n"; \
 	fi
 
 #Generate Bus Wrap Verilog files for teams
@@ -516,14 +523,14 @@ bus-wrap-generate:
 	cd $(PWD)/verilog/rtl &&\
 	make generate
 
-# Example target: tb-module-sample_proj-flex_counter
+# Example target: tb-module-team_00-flex_counter
 # These testbenches must live within the dv/team_##/module_tests directory and will output there too
 .PHONY: tb-module-%
 tb-module-%:
-	@echo -e "\n------------"
-	@echo -e "Team Folder: $(firstword $(subst -, ,$*))"
-	@echo -e "Module Name: $(lastword $(subst -, ,$*))"
-	@echo -e "------------\n"
+	@echo "\n------------"
+	@echo "Team Folder: $(firstword $(subst -, ,$*))"
+	@echo "Module Name: $(lastword $(subst -, ,$*))"
+	@echo "------------\n"
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
 	cd $(PWD)/verilog/dv/$(firstword $(subst -, ,$*))/module_tests &&\
 	make $(lastword $(subst -, ,$*)).vcd
@@ -531,16 +538,34 @@ tb-module-%:
 
 # Compilation and Simulation with Synopsys VCS
 # The testbenches must live within the dv/team_##/module_tests directory and will output there too
-# Example target: tbsim-source-sample_proj-flex_counter
+# Example target: tbsim-source-team_00-flex_counter
 .PHONY: tbsim-source-%
 tbsim-source-%:
-	@echo -e "\n------------"
-	@echo -e "Team Folder: $(firstword $(subst -, ,$*))"
-	@echo -e "Module Name: $(lastword $(subst -, ,$*))"
-	@echo -e "------------\n"
+	@echo "\n------------"
+	@echo "Team Folder: $(firstword $(subst -, ,$*))"
+	@echo "Module Name: $(lastword $(subst -, ,$*))"
+	@echo "------------\n"
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
 	cd $(PWD)/verilog/dv/$(firstword $(subst -, ,$*))/module_tests &&\
 	make sim-source-$(lastword $(subst -, ,$*))
+
+
+# Prototype design on iCE40 FPGA
+# Example target: make cram_team_00
+.PHONY: cram_%
+cram_%:
+	export BUILD=verilog/rtl/team_projects/$*/build &&\
+	export ICE=fpga_support/ice40hx8k.sv &&\
+	export UART=fpga_support/uart/* &&\
+	export PINMAP=fpga_support/pinmap.pcf &&\
+	export TEAM_DIR=verilog/rtl/team_projects/$* &&\
+	export SRC_DIR=verilog/rtl/team_projects/$*/src &&\
+	export FPGA_TOP=$*_fpga_top &&\
+	mkdir -p $$BUILD &&\
+	yosys -p "read_verilog -sv -noblackbox $$ICE $$UART $$TEAM_DIR/*.sv $$SRC_DIR/*.sv; synth_ice40 -top ice40hx8k -json $$BUILD/$$FPGA_TOP.json" &&\
+	nextpnr-ice40 --hx8k --package ct256 --pcf $$PINMAP --asc $$BUILD/$$FPGA_TOP.asc --json $$BUILD/$$FPGA_TOP.json &&\
+	icepack $$BUILD/$$FPGA_TOP.asc $$BUILD/$$FPGA_TOP.bin &&\
+	iceprog -S $$BUILD/$$FPGA_TOP.bin
 
 # FYI: Run 'make clean' to clean all temporary files produced by testbenches
 
@@ -596,6 +621,8 @@ init_team_%:
 				sed "s/##/$$team_number/g" ./template_files/team.sv > ./verilog/rtl/team_projects/team_$$team_number/team_$$team_number.sv; \
 				echo "Creating team_$$team_number"'_Wrapper.sv'; \
 				sed "s/##/$$team_number/g" ./template_files/team_Wrapper.sv > "./verilog/rtl/team_projects/team_$$team_number/team_$$team_number"'_Wrapper.sv'; \
+				echo "Creating team_$$team_number"'_fpga_top.sv'; \
+				sed "s/##/$$team_number/g" ./template_files/fpga_top.sv > "./verilog/rtl/team_projects/team_$$team_number/team_$$team_number"'_fpga_top.sv'; \
 				echo "Creating team_$$team_number.yml"; \
 				sed "s/##/$$team_number/g" ./template_files/team.yml > ./verilog/rtl/team_projects/team_$$team_number/team_$$team_number.yml; \
 				echo "Creating includes"; \
