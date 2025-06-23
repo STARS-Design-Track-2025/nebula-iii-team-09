@@ -110,14 +110,29 @@ endif
 
 ifeq ($(SIM),RTL)
 	vvp  $<
-	 mv $@ RTL-$@
+	mv $@ RTL-$@
+	if [ -f RTL-$*.gtkw ]; then \
+		gtkwave RTL-$*.gtkw; \
+	else \
+		gtkwave RTL-$@; \
+	fi
 endif
 ifeq ($(SIM),GL)
 	vvp  $<
-	 mv $@ GL-$@
+	mv $@ GL-$@
+	if [ -f GL-$*.gtkw ]; then \
+		gtkwave GL-$*.gtkw; \
+	else \
+		gtkwave GL-$@; \
+	fi
 endif
 ifeq ($(SIM),GL_SDF)
-	 mv $@ GL_SDF-$@
+	mv $@ GL_SDF-$@
+	if [ -f GL_SDF-$*.gtkw ]; then \
+		gtkwave GL_SDF-$*.gtkw; \
+	else \
+		gtkwave GL_SDF-$@; \
+	fi
 endif
 
 # twinwave: RTL-%.vcd GL-%.vcd

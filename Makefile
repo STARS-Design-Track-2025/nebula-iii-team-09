@@ -351,6 +351,8 @@ $(LVS_BLOCKS): lvs-% : ./lvs/%/lvs_config.json check-pdk check-precheck
 
 .PHONY: clean
 clean:
+	@find openlane/*/ -maxdepth 1 -type d -name runs -exec rm -rf {} + && \
+	find verilog/rtl/team_projects/*/ -maxdepth 1 -type d -name build -exec rm -rf {} + && \
 	cd ./verilog/dv/ && \
 		$(MAKE) -j$(THREADS) clean
 

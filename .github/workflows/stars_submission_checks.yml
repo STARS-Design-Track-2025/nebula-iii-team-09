@@ -34,6 +34,7 @@ jobs:
                         "lvs/" \
                         "Makefile" \
                         "integration_gitignore" \
+                        "fpga_support" \
 
                         "verilog/rtl/ffram/" \
                         "verilog/rtl/gpio_control/" \
@@ -68,7 +69,7 @@ jobs:
                         "gds/user_project_wrapper*" \
                         "lef/user_project_wrapper.lef" \
                         "lib/user_project_wrapper.lib" \
-                        "mag/user_project_wrapper.*" \
+                        "mag/user_project_wrapper*" \
                         "sdc/user_project_wrapper.sdc" \
                         "spef/user_project_wrapper.spef" \
                         "spef/multicorner/user_project_wrapper*" \
@@ -105,7 +106,6 @@ jobs:
 
         echo "Checking for blocked files..."
 
-        # Check each file and list problems
         # Check each file and list problems
         while IFS= read -r CHANGED_FILE; do
             for BLOCKED in "${BLOCKED_FILES[@]}"; do
