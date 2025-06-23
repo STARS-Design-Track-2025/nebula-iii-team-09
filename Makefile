@@ -569,7 +569,32 @@ cram_%:
 	icepack $$BUILD/$$FPGA_TOP.asc $$BUILD/$$FPGA_TOP.bin &&\
 	iceprog -S $$BUILD/$$FPGA_TOP.bin
 
-# FYI: Run 'make clean' to clean all temporary files produced by testbenches
+# KLayout Command
+klayout_cmd = \
+	"klayout $(PROJECT_ROOT)/gds/$*.gds \
+	-l $(PDKPATH)/libs.tech/klayout/tech/$(PDK).lyp"
+
+# Open GDSII of design in KLayout
+# Example target: make gdsview_team_00_klayout
+.PHONY: gdsview_%_klayout
+gdsview_%_klayout:
+	@if echo "$(blocks)" | grep -qw "$*"; then \
+		if [ -f "$(PROJECT_ROOT)/gds/$*.gds" ]; then \
+			echo "Opening GDSII layout of $* in KLayout..."; \
+			nix-shell --run $(klayout_cmd) --pure $(OPENLANE2_ROOT)/shell.nix; \
+		else \
+			if [ -n "$(wildcard $(PROJECT_ROOT)/gds/$*.gds.gz*)" ]; then \
+				echo "Error: Design $* has a compressed GDSII file. Run \"make uncompress\" to extract the original file"; \
+				false; \
+			else \
+				echo "Error: Design $* exists, but no GDSII file found"; \
+				false; \
+			fi; \
+		fi; \
+	else \
+		echo "Error: Design $* does not exist"; \
+		false; \
+	fi
 
 # Use this if you wish to view your design's congestion
 congestion_gui:
