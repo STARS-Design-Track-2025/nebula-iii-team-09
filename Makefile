@@ -569,6 +569,7 @@ cram_%:
 	icepack $$BUILD/$$FPGA_TOP.asc $$BUILD/$$FPGA_TOP.bin &&\
 	iceprog -S $$BUILD/$$FPGA_TOP.bin
 
+
 # KLayout Command
 klayout_cmd = \
 	"klayout $(PROJECT_ROOT)/gds/$*.gds \
@@ -595,6 +596,16 @@ gdsview_%_klayout:
 		echo "Error: Design $* does not exist"; \
 		false; \
 	fi
+
+
+# Convert design HDL code from SystemVerilog to Verilog
+.PHONY: sv2v_%
+# Example target: make sv2v_team_00
+sv2v_%:
+	@mkdir -p verilog/rtl/team_projects/$*/converted_modules && \
+	sv2v -y verilog/rtl/team_projects/$*/src -w verilog/rtl/team_projects/$*/converted_modules verilog/rtl/team_projects/$*/$*.sv && \
+	echo "\nConversion complete!\n"
+
 
 # Use this if you wish to view your design's congestion
 congestion_gui:
