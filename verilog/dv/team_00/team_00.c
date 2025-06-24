@@ -18,6 +18,7 @@
 // This include is relative to $CARAVEL_PATH (see Makefile)
 #include <defs.h>
 #include <stub.c>
+#include "team_00_cpu.h"  // Uncomment if you're a CPU team and need to load instructions to RAM
 
 // List of Wishbone Slave Addresses
 
@@ -162,6 +163,12 @@ void main()
 
 	// Configure LA output to be selected by sample project
 	reg_la_sel = 0x0;
+
+	// Load instructions to RAM - CPU teams: uncomment this!
+	int num_instr = sizeof(instructions) / sizeof(instructions[0]);
+	for (int i = 0; i < num_instr; i++) {
+        *(&sram_space + i) = instructions[i];
+    }
 	
 	// Enable your design
 	reg_team_00_EN = 1;
@@ -186,7 +193,7 @@ void main()
 		}
 	}
 
-	// If you're using SRAM, you can add reads and writes here
+	// If using SRAM, you can add more reads and writes here
 
 	// Add some extra instructions because GL sims are buggy. This has to do with the instruction cache 
 	// trying to read from undefined memory in anticipation of having more instructions

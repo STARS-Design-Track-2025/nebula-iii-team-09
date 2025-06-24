@@ -6,7 +6,9 @@
 *.lst
 *.vcd
 *.gtkw
+*.o
 *.elf
+*.bin
 *.hex
 *.hexe
 /env
@@ -25,6 +27,7 @@
 /verilog/dv/*/*.log
 /verilog/dv/*/.nfs*
 /verilog/dv/*.vvp
+/verilog/dv/team_*/team*.h
 /verilog/dv/team_*/team*.vvp
 /verilog/dv/team_*/team*.vcd.hier
 /verilog/gl/user_project_wrapper.v

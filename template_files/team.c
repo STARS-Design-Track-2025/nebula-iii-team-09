@@ -18,6 +18,7 @@
 // This include is relative to $CARAVEL_PATH (see Makefile)
 #include <defs.h>
 #include <stub.c>
+// #include "team_##_cpu.h"  // Uncomment if you're a CPU team and need to load instructions to RAM
 
 // List of Wishbone Slave Addresses
 
@@ -143,9 +144,15 @@ void main()
 	reg_gpio_PIN_16TO23 = 0x00000000;
 	reg_gpio_PIN_24TO31 = 0x00000000;
 	reg_gpio_PIN_32TO37 = 0x000000;
+
+	// Load instructions to RAM - CPU teams: uncomment this!
+	// int num_instr = sizeof(instructions) / sizeof(instructions[0]);
+	// for (int i = 0; i < num_instr; i++) {
+    //     *(&sram_space + i) = instructions[i];
+    // }
 	
 	// Enable your design
 	reg_team_##_EN = 1;
 	
-	// If you're using SRAM, you can add reads and writes here
+	// If using SRAM, you can add more reads and writes here
 }

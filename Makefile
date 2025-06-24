@@ -607,6 +607,14 @@ sv2v_%:
 	echo "\nConversion complete!\n"
 
 
+# Assemble RISCV assembly (.asm) file into a ..hex file
+# Useful for CPU teams so they can load RAM with RISCV instructions
+assemble_%:
+	@export GCC_PREFIX=riscv64-unknown-elf &&\
+	export GCC_PATH=/package/riscv-gnu-toolchain/bin &&\
+	cd verilog/dv && make assy2hex_$*
+
+
 # Use this if you wish to view your design's congestion
 congestion_gui:
 	nix-shell --run "openroad -exit -no_splash -gui -metrics $(PWD)/openlane/tmp.json" --pure $(OPENLANE2_ROOT)/shell.nix

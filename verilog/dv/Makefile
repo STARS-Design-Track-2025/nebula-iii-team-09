@@ -33,7 +33,7 @@ $(DV_PATTERNS): verify-% :
 
 clean:  ${PATTERNS}
 	for i in ${PATTERNS}; do \
-		( cd $$i && \rm  -f *.elf *.hex *.bin *.vvp *.log *.vcd *.lst *.hexe ) ; \
+		( cd $$i && \rm  -f *.elf *.hex *.bin *.o *.h *.vvp *.log *.vcd *.lst *.hexe ) ; \
 	done
 	for i in $(filter-out io_ports la_test1 la_test2 wb_port mprj_stimulus, $(PATTERNS)); do \
 		( cd $$i && \cd module_tests && \make clean) ; \
@@ -41,3 +41,21 @@ clean:  ${PATTERNS}
 	rm -rf *.log
 	
 .PHONY: clean all
+
+# Convert RISCV assembly to list of RISCV hexadecimal instructions
+.PHONY: assy2hex_%
+assy2hex_%:
+	@if [ -f "$*/$*_cpu.asm" ]; then \
+		$(GCC_PATH)/$(GCC_PREFIX)-as -march=rv32i -mabi=ilp32 -o $*/$*_cpu.o $*/$*_cpu.asm; \
+		$(GCC_PATH)/$(GCC_PREFIX)-ld -m elf32lriscv -Ttext=0x0 -o $*/$*_cpu.elf $*/$*_cpu.o; \
+		$(GCC_PATH)/$(GCC_PREFIX)-objcopy -O binary $*/$*_cpu.elf $*/$*_cpu.bin; \
+		xxd -p -c 4 $*/$*_cpu.bin | awk '{print substr($$0,7,2) substr($$0,5,2) substr($$0,3,2) substr($$0,1,2)}' > $*/$*_cpu.hex; \
+		echo "\nHEX memory file generated!\n"; \
+		echo "uint32_t instructions[] = {" > $*/$*_cpu.h; \
+		awk '{ lines[NR] = $$0 } END { for (i = 1; i <= NR; i++) printf "  0x%s%s\n", lines[i], (i < NR ? "," : "") }' $*/$*_cpu.hex >> $*/$*_cpu.h; \
+		echo "};" >> $*/$*_cpu.h; \
+		echo "C Header file created!\n"; \
+	else \
+		echo "\nERROR: No assembly file '$*_cpu.asm' found!\n"; \
+		false; \
+	fi
