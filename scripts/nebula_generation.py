@@ -380,8 +380,8 @@ f"""
         .wbs_sel_o_periph({wbs_sel_o_projects_flat, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_ram})
     );
 
-    // FFRAM module
-    ffram_WB_Wrapper ffram (
+     // SRAM instantiation
+    sram_WB_Wrapper sram (
     `ifdef USE_POWER_PINS
         .vccd1(vccd1),	// User area 1 1.8V power
         .vssd1(vssd1),	// User area 1 digital ground

@@ -41,6 +41,9 @@
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # FFRAM
--v  $(USER_PROJECT_VERILOG)/rtl/ffram/ffram_WB_Wrapper.sv
--v  $(USER_PROJECT_VERILOG)/rtl/ffram/ffram.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/ffram/ffram_WB_Wrapper.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/ffram/ffram.sv
 
+# SRAM
+-v $(USER_PROJECT_VERILOG)/rtl/sram/sram_WB_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sram/sram_32_1024_sky130.v

@@ -39,6 +39,7 @@ jobs:
                         "verilog/rtl/ffram/" \
                         "verilog/rtl/gpio_control/" \
                         "verilog/rtl/la_control/" \
+                        "verilog/rtl/sram/" \
                         "verilog/rtl/wishbone_interconnect/" \
                         "verilog/rtl/wishbone_manager/" \
                         "verilog/rtl/team_projects/team_00/" \
@@ -99,6 +100,10 @@ jobs:
                         "spef/multicorner/team_00*" \
                         "spi/team_00.spi" \
                         "signoff/team_00/" \
+
+                        "gds/sram_32_1024_sky130*" \
+                        "lef/sram_32_1024_sky130.lef" \
+                        "lib/sram_32_1024_sky130_TT_1p8V_25C.lib" \
                         )
 
         # Initialize a flag to detect if any disallowed files were changed

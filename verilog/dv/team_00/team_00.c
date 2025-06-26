@@ -169,6 +169,11 @@ void main()
 	for (int i = 0; i < num_instr; i++) {
         *(&sram_space + i) = instructions[i];
     }
+
+	// Read instructions from RAM - check that they were loaded properly
+	for (int i = 0; i < num_instr; i++) {
+		while(*(&sram_space + i) != instructions[i]);
+	}
 	
 	// Enable your design
 	reg_team_00_EN = 1;

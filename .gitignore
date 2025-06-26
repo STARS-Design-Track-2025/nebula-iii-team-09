@@ -39,7 +39,7 @@ openlane/user_project_wrapper/config.json
 /def/user_project_wrapper.def.gz
 /def/user_project_wrapper.def
 /gds/user_project_wrapper.gds
-/gds/user_project_wrapper.gds.gz
+/gds/user_project_wrapper.gds.gz*
 /lef/user_project_wrapper.lef
 /lib/user_project_wrapper.lib
 /mag/user_project_wrapper.mag
