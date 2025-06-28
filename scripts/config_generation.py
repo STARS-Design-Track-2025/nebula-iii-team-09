@@ -36,7 +36,7 @@ def main():
     "DESIGN_NAME": "user_project_wrapper",
     "VERILOG_FILES": [
         "dir::../../verilog/rtl/wb_wrapper.vh",
-        "dir::../../verilog/rtl/ffram/ffram_WB_Wrapper.sv",
+        "dir::../../verilog/rtl/sram/sram_WB_Wrapper.sv",
         "dir::../../verilog/rtl/gpio_control/gpio_control_WB.sv",
         "dir::../../verilog/rtl/gpio_control/gpio_control_Wrapper.v",
         "dir::../../verilog/rtl/gpio_control/gpio_control.sv",
@@ -82,7 +82,7 @@ f"""
     
         f.write(\
 """                
-        "mprj.ffram.ffram_inst vccd1 vssd1 vccd1 vssd1"
+        "mprj.sram.sram_inst vccd1 vssd1 vccd1 vssd1"
     ],
     "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
     "MAGIC_DEF_LABELS": 0,
@@ -100,7 +100,7 @@ f"""
 
         f.write(\
 """                
-        "dir::../../verilog/gl/ffram.v"
+        "dir::../../verilog/rtl/sram/sram_32_1024_sky130.v"
     ],
     "EXTRA_LEFS": [
 """\
@@ -116,7 +116,7 @@ f"""
 
         f.write(\
 """                
-        "dir::../../lef/ffram.lef"
+        "dir::../../lef/sram_32_1024_sky130.lef"
     ],
     "EXTRA_GDS_FILES": [
 """\
@@ -132,7 +132,7 @@ f"""
 
         f.write(\
 """                
-        "dir::../../gds/ffram.gds"
+        "dir::../../gds/sram_32_1024_sky130.gds"
     ],
     "EXTRA_LIBS": [
 """\
@@ -147,27 +147,24 @@ f"""
                 
         f.write(\
 """     
-        "dir::../../lib/ffram.lib"
+        "dir::../../lib/sram_32_1024_sky130_TT_1p8V_25C.lib"
     ],
     "EXTRA_SPEFS": [
 """\
 )  
-        for team in teams:
+        for i, team in enumerate(teams):
+            comma = "," if i < len(teams) - 1 else ""
             f.write(\
 f"""      
         "{team}", 
         "dir::../../spef/multicorner/{team}.min.spef", 
         "dir::../../spef/multicorner/{team}.nom.spef", 
-        "dir::../../spef/multicorner/{team}.max.spef",
+        "dir::../../spef/multicorner/{team}.max.spef"{comma}
 """\
 )
                 
         f.write(\
 """                
-        "ffram", 
-        "dir::../../spef/multicorner/ffram.min.spef", 
-        "dir::../../spef/multicorner/ffram.nom.spef", 
-        "dir::../../spef/multicorner/ffram.max.spef"
     ],
     "BASE_SDC_FILE": "dir::base_user_project_wrapper.sdc",
     "IO_SYNC": 0,
@@ -175,6 +172,13 @@ f"""
     "RUN_LINTER": 0,
     "QUIT_ON_SYNTH_CHECKS": 0,
     "FP_PDN_CHECK_NODES": 1,
+
+    "//": "Added to skip DRC, because of SRAM (will remove later)",
+    "RUN_KLAYOUT_DRC": 0,
+    "RUN_MAGIC_DRC": 0,
+    "MAGIC_DRC_USE_GDS": 0,
+    "QUIT_ON_MAGIC_DRC": 0,
+
     "SYNTH_ELABORATE_ONLY": 0,
     "SYNTH_CLOCK_UNCERTAINTY": 0.2,
     "PL_RESIZER_HOLD_SLACK_MARGIN": 1.0,

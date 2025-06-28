@@ -41,15 +41,15 @@ library (sram_32_1024_sky130_TT_1p8V_25C_lib){
     lu_table_template(CELL_TABLE){
         variable_1 : input_net_transition;
         variable_2 : total_output_net_capacitance;
-        index_1("0.00125, 0.005, 0.04");
+        index_1("0.00125, 0.005, 0.045");
         index_2("0.0017224999999999999, 0.006889999999999999, 0.027559999999999998");
     }
 
     lu_table_template(CONSTRAINT_TABLE){
         variable_1 : related_pin_transition;
         variable_2 : constrained_pin_transition;
-        index_1("0.00125, 0.005, 0.04");
-        index_2("0.00125, 0.005, 0.04");
+        index_1("0.00125, 0.005, 0.045");
+        index_2("0.00125, 0.005, 0.045");
     }
 
     default_operating_conditions : OC; 
@@ -140,7 +140,7 @@ cell (sram_32_1024_sky130){
         bus_type  : addr; 
         direction  : input; 
         capacitance : 0.006889999999999999;  
-        max_transition       : 0.04;
+        max_transition       : 0.045;
         pin(addr0[9:0]){
         timing(){ 
             timing_type : setup_rising; 
@@ -291,7 +291,7 @@ cell (sram_32_1024_sky130){
         bus_type  : addr; 
         direction  : input; 
         capacitance : 0.006889999999999999;  
-        max_transition       : 0.04;
+        max_transition       : 0.045;
         pin(addr1[9:0]){
         timing(){ 
             timing_type : setup_rising; 
