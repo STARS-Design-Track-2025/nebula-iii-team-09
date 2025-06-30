@@ -687,8 +687,12 @@ init_team_%:
 				sed "s/##/$$team_number/g" ./template_files/team.c > ./verilog/dv/team_$$team_number/team_$$team_number.c; \
 				echo "Creating directory ./openlane/team_$$team_number"; \
 				mkdir -p ./openlane/team_$$team_number; \
-				echo "Creating directory ./openlane/team_$$team_number/config.json"; \
+				echo "Creating ./openlane/team_$$team_number/config.json"; \
 				sed "s/##/$$team_number/g" ./template_files/config.json > ./openlane/team_$$team_number/config.json; \
+				echo "Creating directory ./docs/team_$$team_number"; \
+				mkdir -p ./docs/team_$$team_number; \
+				echo "Creating ./docs/team_$$team_number/README.md"; \
+				sed "s/TEAM_ID/$$team_number/g" ./template_files/team_docs.md > ./docs/team_$$team_number/README.md; \
 				echo "\033[32mSUCCESS\033[0m: Initialization complete for team_$$team_number"; \
 			else \
 				echo "\033[31mERROR\033[0m: Directory ./opnelane/team_$$team_number already exists."; \

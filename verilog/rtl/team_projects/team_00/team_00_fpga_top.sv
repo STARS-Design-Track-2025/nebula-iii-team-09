@@ -51,7 +51,7 @@ module top (
     // .DAT_I(DAT_I),
 
     // Add other I/O connections to WB bus here
-    .prescaler(14'd1000),
+    .prescaler(14'd1000),  // each output will be high for 250 ms
     .done(blue)
   );
 

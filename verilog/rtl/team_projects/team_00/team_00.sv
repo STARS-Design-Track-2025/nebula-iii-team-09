@@ -15,12 +15,12 @@
 *
 * The "prescaler" value controls the cycling period (i.e., how long the
 * output of each GPIO pin stays high). This value is programmed
-* through the wishbone bus. A prescaler value of 1 means that each pin
-* is set high for 1 ms. Similarly, a prescaler value of 1000 means that
+* through the wishbone bus. A prescaler value of 4 means that each pin
+* is set high for 1 ms. Similarly, a prescaler value of 4000 means that
 * each pin is set high for 1 s.
 * 
 * "Done" goes high after the last pin output turns off.
-* It is used as an interrupt to the management core. Each pin
+* It is used as an interrupt to the Caravel management core. Each pin
 * should have gone high for the same amount of time
 * (one after the other) before the interrupt is raised.
 * 
