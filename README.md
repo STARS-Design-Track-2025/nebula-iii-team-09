@@ -25,21 +25,23 @@ have had multiple teams' test benches pass before with their entire design comme
 
 ## Getting Started (For Students)
 
-1. Create a fork of this repository. Call your fork `nebula-iii-team-##`, where ## is your 2-digit team number in decimal, and make sure it is owned by the **STARS-Design-Track-2025** organization. If you don't know how to create a fork or what your team number is, ask your peer mentor. Then, within your Purdue ECN career account, open a terminal and clone your fork repository.
+1. Create a fork of this repository. Call your fork `nebula-iii-team-##`, where ## is your 2-digit team number in decimal, and make sure it is owned by the **STARS-Design-Track-2025** organization. If you don't know how to create a fork or what your team number is, ask your peer mentor.
 
-2. To create the initial files for your team, run `make init_team_##`. The created files are contained within the following folders:
+2. Within your Purdue ECN career account, open a terminal and clone your fork repository. Then, locally change the name of your directory from `nebula-iii-team-##` to `nebula-iii`. This seems like a pointless change, but many of our GitHub action checks require the directory name to be `nebula-iii`. Your remote repository name will still be `nebula-iii-team-##`, so there's nothing to worry about.
+
+3. To create the initial files for your team, run `make init_team_##`. The created files are contained within the following folders:
 * `docs/team_##` - Will contain documentation about your project, functionality description, and RTL block diagrams.
 * `openlane/team_##` - Will contain the config file that you must fill before generating the physical layout of your design with OpenLane.
 * `verilog/dv/team_##` - Will contain the Caravel top-level testbench (with your design included), your design's top-level testbench, and any sub-module testbench.
 * `verilog/rtl/team_projects/team_##` - Will contain all the RTL SystemVerilog/Verilog code files, including your team's top-level module, sub-modules, and the team's wrapper files.<br>
 **NOTE:** The files for a sample project, `team_00`, are available. Do NOT modify them, but feel free to review them if you want to understand what it does. This project should be able to be run through all of the steps outlined here.
 
-3. If you haven't already, run `make bus-wrap-setup` (you only need to this once).
+4. If you haven't already, run `make bus-wrap-setup` (you only need to this once).
 
-4. Navigate to `verilog/rtl/team_projects/team_##/team_##.yml`
+5. Navigate to `verilog/rtl/team_projects/team_##/team_##.yml`
 This file contains configuration information that our targets will use to generate top level and wrapper files.
 You are allowed to use both the Logic Analyzer (LA) and Wishbone Master interface (WB_master) - see code snippet below. Each of these
-will increase the perimeter of your design, but can add important and interesting functionality. Choose if you'll use these now. Once you've made your choice, run `make bus-wrap-generate`, which will modify the team wrapper file and create the Wishbone wrapper file. You can always change the YAML file later, but you will need to re-run `make nebula` (step #6 explains what this does).
+will increase the perimeter of your design, but can add important and interesting functionality. Choose if you'll use these now. Once you've made your choice, run `make bus-wrap-generate`, which will modify the team wrapper file and create the Wishbone wrapper file. You can always change the YAML file later, but you will need to re-run `make nebula` (step #9 explains what this does).
 
 ```yaml
 project_info:
@@ -47,24 +49,24 @@ project_info:
   la_enabled: False
 ```
 
-5. The `src` folder within `verilog/rtl/team_projects/team_##` is where you will save all your sub-module SystemVerilog files.<br>
+6. The `src` folder within `verilog/rtl/team_projects/team_##` is where you will save all your sub-module SystemVerilog files.<br>
 **IMPORTANT:** To avoid problems during integration, please stick to the following sub-module naming syntax: `t##_<module_name>`. For example, if you are part of Team 01 and want to implement a clock divider module, you can name it `t01_clock_divider`. Do NOT name it just `clock_divider`! Additionally, your file names must match the module names. If your module name is `t02_counter`, then your file name must be `t02_counter.sv`.
 
-6. Navigate to `verilog/rtl/team_projects/team_##/includes`. You must add the path of all the files that are part of your design here. Your design top level module (`team_##.sv`) and the wrapper files (`team_##_WB.v` and `team_##_Wrapper.sv`) are already included.
+7. Navigate to `verilog/rtl/team_projects/team_##/includes`. You must add the path of all the files that are part of your design here. Your design top level module (`team_##.sv`) and the wrapper files (`team_##_WB.v` and `team_##_Wrapper.sv`) are already included.
 
-6. The `module_tests` folder within `verilog/dv/team_##` is where you will save all your sub-module and design top-level testbenches. Your testbench module name must follow this syntax: `<module_name>_tb`. For example, if the module you want to test is called `t01_clock_divider`, then the testbench name must be `t01_clock_divider_tb`. Similar to source code files, testbench file names must match the testbench module name. To simulate one of these testbenches run `make tb-module-team_##-<module_name>`. Example: `make tb-module-team_00-t00_flex_counter`.
+8. The `module_tests` folder within `verilog/dv/team_##` is where you will save all your sub-module and design top-level testbenches. Your testbench module name must follow this syntax: `<module_name>_tb`. For example, if the module you want to test is called `t01_clock_divider`, then the testbench name must be `t01_clock_divider_tb`. Similar to source code files, testbench file names must match the testbench module name. To simulate one of these testbenches run `make tb-module-team_##-<module_name>`. Example: `make tb-module-team_00-t00_flex_counter`.
 
-7. Run `make nebula` to generate the NEBULA top level files - this will put your design within the `nebula` module, given it access to the Wishbone bus interconnect and the SRAM. Running this target calls a few Python scripts to combine all of the teams' designs together and write a few files. These scripts should NOT be changed, but if you're interested, you can see them in the `scripts` folder.
+9. Run `make nebula` to generate the NEBULA top level files - this will put your design within the `nebula` module, given it access to the Wishbone bus interconnect and the SRAM. Running this target calls a few Python scripts to combine all of the teams' designs together and write a few files. These scripts should NOT be changed, but if you're interested, you can see them in the `scripts` folder.
 
-8. After you're done coding and testing yours design, you must verify that it works when we include it in the Caravel top-level. To do this, first run `make purdue-setup` to setup the testing environment. Then, to run a source-level simulation, run `make purdue-verify-team_##-rtl`. This will run the testbench located in `verilog/dv/team_##/team_##_tb.v` (ask your PM or any integration TA to explain what this testbench does and how to use it).
+10. After you're done coding and testing yours design, you must verify that it works when we include it in the Caravel top-level. To do this, first run `make purdue-setup` to setup the testing environment. Then, to run a source-level simulation, run `make purdue-verify-team_##-rtl`. This will run the testbench located in `verilog/dv/team_##/team_##_tb.v` (ask your PM or any integration TA to explain what this testbench does and how to use it).
 
-9. Once your design is passing your source-level (RTL) simulation, you will need to harden your team's macro (using OpenLane), place the macro within the top level User Project Wrapper, and harden the top level. This generates a gate-level netlist that will then be used for simulations. Edit the `config.json` file in `openlane/team_##` as you need and run `make team_##` to harden your design - this will take between a few minutes to an hour, depending on your design complexity. Then, manually place your design within `openlane/user_project_wrapper/macro.cfg` (follow the example of Team 00). Run `make user_project_wrapper` to harden the top level. This will take a while (at least an hour).
+11. Once your design is passing your source-level (RTL) simulation, you will need to harden your team's macro (using OpenLane), place the macro within the top level User Project Wrapper, and harden the top level. This generates a gate-level netlist that will then be used for simulations. Edit the `config.json` file in `openlane/team_##` as you need and run `make team_##` to harden your design - this will take between a few minutes to an hour, depending on your design complexity. Then, manually place your design within `openlane/user_project_wrapper/macro.cfg` (follow the example of Team 00). Run `make user_project_wrapper` to harden the top level. This will take a while (at least an hour).
 
-10. Run `make purdue-verify-team_##-gl` to run a gate-level simulation. This will take a while, but should produce the same results as your source simulation. If the results match, you are good to begin submitting your design.
+12. Run `make purdue-verify-team_##-gl` to run a gate-level simulation. This will take a while, but should produce the same results as your source simulation. If the results match, you are good to begin submitting your design.
 
-11. There is a GitHub action that will identify some conflicts that we have had in the past. These are primarily naming conventions and you can see the results if you click on the actions tab on the web version of GitHub. To be approved for the final chip, you must pass each of these checks. If you find a bug, please feel free to report it.
+13. There is a GitHub action that will identify some conflicts that we have had in the past. These are primarily naming conventions and you can see the results if you click on the actions tab on the web version of GitHub. To be approved for the final chip, you must pass each of these checks. If you find a bug, please feel free to report it.
 
-12. Once your simulations are good and you are passing the GitHub action, you can create a **Pull Request** with your changes. Please do this to a branch on your repository other than main. If not, you will be asked to resubmit. If you need help with this, feel free to ask your PM.
+14. Once your simulations are good and you are passing the GitHub action, you can create a **Pull Request** with your changes. Please do this to a branch on your repository other than main. If not, you will be asked to resubmit. If you need help with this, feel free to ask your PM.
 
 ## Additional (Useful) Targets
 * `make cram_team_##` - Prototypes your design on the iCE40 FPGA. You can find the FPGA top level wrapper file here: `verilog/rtl/team_projects/team_##/team_##_fpga_top.sv`
