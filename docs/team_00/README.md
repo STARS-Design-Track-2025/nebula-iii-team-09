@@ -1,7 +1,7 @@
 # NEBULA III - Project Documentation
 
-## Team 00
-Sample project created Miguel Isrrael Teran.
+## Team 00 - Sample Project
+Created by Miguel Isrrael Teran.
 
 ## Project Overview
 This sample project consists of a design that cycles through each of the 34 available GPIO pins, setting the pin output on and off, one at a time, in sequence. The state of each pin can be visualized by connecting an LED to each output.

@@ -56,6 +56,6 @@ assy2hex_%:
 		echo "};" >> $*/$*_cpu.h; \
 		echo "C Header file created!\n"; \
 	else \
-		echo "\nERROR: No assembly file '$*_cpu.asm' found!\n"; \
+		echo "\nERROR: No assembly file 'verilog/dv/$*/$*_cpu.asm' found!\n"; \
 		false; \
 	fi

@@ -1,6 +1,6 @@
 # NEBULA III - Project Documentation
 
-## Team TEAM_ID
+## Team TEAM_ID - [Team Name]
 * **Peer Mentor:** [Name]
 * [Name]
 * [Name]

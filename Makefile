@@ -525,7 +525,7 @@ bus-wrap-generate:
 	cd $(PWD)/verilog/rtl &&\
 	make generate
 
-# Example target: tb-module-team_00-flex_counter
+# Example target: tb-module-team_00-t00_flex_counter
 # These testbenches must live within the dv/team_##/module_tests directory and will output there too
 .PHONY: tb-module-%
 tb-module-%:
@@ -540,7 +540,7 @@ tb-module-%:
 
 # Compilation and Simulation with Synopsys VCS
 # The testbenches must live within the dv/team_##/module_tests directory and will output there too
-# Example target: tbsim-source-team_00-flex_counter
+# Example target: tbsim-source-team_00-t00_flex_counter
 .PHONY: tbsim-source-%
 tbsim-source-%:
 	@echo "\n------------"
