@@ -34,7 +34,7 @@ jobs:
                         "lvs/" \
                         "Makefile" \
                         "integration_gitignore" \
-                        "fpga_support" \
+                        "fpga_support/" \
 
                         "verilog/rtl/ffram/" \
                         "verilog/rtl/gpio_control/" \

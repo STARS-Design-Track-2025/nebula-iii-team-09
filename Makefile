@@ -607,8 +607,8 @@ sv2v_%:
 	echo "\nConversion complete!\n"
 
 
-# Assemble RISCV assembly (.asm) file into a ..hex file
-# Useful for CPU teams so they can load RAM with RISCV instructions
+# Assemble RISC-V assembly (.asm) file into a list of instructions in a C header file
+# Useful for CPU teams so they can load RISC-V instructions into RAM
 assemble_%:
 	@export GCC_PREFIX=riscv64-unknown-elf &&\
 	export GCC_PATH=/package/riscv-gnu-toolchain/bin &&\

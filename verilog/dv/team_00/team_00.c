@@ -170,7 +170,7 @@ void main()
         *(&sram_space + i) = instructions[i];
     }
 
-	// Read instructions from RAM - check that they were loaded properly
+	// Read instructions from RAM (check that they were loaded properly) - CPU teams: uncomment this!
 	for (int i = 0; i < num_instr; i++) {
 		while(*(&sram_space + i) != instructions[i]);
 	}

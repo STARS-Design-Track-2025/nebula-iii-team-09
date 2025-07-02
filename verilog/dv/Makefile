@@ -42,7 +42,7 @@ clean:  ${PATTERNS}
 	
 .PHONY: clean all
 
-# Convert RISCV assembly to list of RISCV hexadecimal instructions
+# Convert RISC-V assembly to list of RISC-V hexadecimal instructions
 .PHONY: assy2hex_%
 assy2hex_%:
 	@if [ -f "$*/$*_cpu.asm" ]; then \
