@@ -512,7 +512,7 @@ bus-wrap-setup: check_dependencies
 	@pip install svmodule &&\
 	cd $(PWD)/dependencies &&\
 	if [ ! -d "BusWrap" ]; then \
-		git clone git@github.com:efabless/BusWrap.git; \
+		git clone https://github.com/efabless/BusWrap.git; \
 		cd BusWrap; \
 		git checkout e468b6b; \
 	else \
