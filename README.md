@@ -25,7 +25,7 @@ have had multiple teams' test benches pass before with their entire design comme
 
 ## Getting Started (For Students)
 
-1. Create a fork of this repository. Call your fork `nebula-iii-team-##`, where ## is your 2-digit team number in decimal, and make sure it is owned by the **STARS-Design-Track-2025** organization. If you don't know how to create a fork or what your team number is, ask your peer mentor.
+1. [**CAUTION:** Only 1 person in your team should complete this step!] Create a fork of this repository. Call your fork `nebula-iii-team-##`, where ## is your 2-digit team number in decimal, and make sure it is owned by the **STARS-Design-Track-2025** organization. If you don't know how to create a fork or what your team number is, ask your peer mentor.
 
 2. Within your Purdue ECN career account, open a terminal and clone your fork repository. Then, locally change the name of your directory from `nebula-iii-team-##` to `nebula-iii`. This seems like a pointless change, but many of our GitHub action checks require the directory name to be `nebula-iii`. Your remote repository name will still be `nebula-iii-team-##`, so there's nothing to worry about.
 
