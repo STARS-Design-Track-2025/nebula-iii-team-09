@@ -103,9 +103,9 @@ jobs:
                         "spi/team_00.spi" \
                         "signoff/team_00/" \
 
-                        "gds/sram_32_1024_sky130*" \
-                        "lef/sram_32_1024_sky130.lef" \
-                        "lib/sram_32_1024_sky130_TT_1p8V_25C.lib" \
+                        "gds/sky130_sram_4kbyte_1r1w_32x1024_8*" \
+                        "lef/sky130_sram_4kbyte_1r1w_32x1024_8.lef" \
+                        "lib/sky130_sram_4kbyte_1r1w_32x1024_8_TT_1p8V_25C.lib" \
 
                         "gds/sky130_sram_8kbyte_1r1w_32x2048_8*" \
                         "lef/sky130_sram_8kbyte_1r1w_32x2048_8.lef" \
