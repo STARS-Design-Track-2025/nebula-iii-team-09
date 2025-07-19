@@ -63,7 +63,7 @@ ifeq ($(PDK),sky130A)
 	export OPEN_PDKS_COMMIT_LVS?=6d4d11780c40b20ee63cc98e645307a9bf2b2ab8
 	export OPEN_PDKS_COMMIT?=0fe599b2afb6708d281543108caf8310912f54af
 	export OPENLANE_TAG?=2023.07.19-1
-	MPW_TAG ?= CC2509-test
+	MPW_TAG ?= CC2509
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -133,10 +133,10 @@ simenv-cocotb:
 	docker pull chipfoundry/dv:cocotb
 
 .PHONY: setup
-setup: check_dependencies install check-env install_mcw openlane pdk-with-volare setup-timing-scripts setup-cocotb precheck
+setup: check_dependencies install check-env install_mcw openlane pdk-with-ciel setup-timing-scripts setup-cocotb precheck
 
 .PHONY: purdue-setup
-purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup
+purdue-setup: check_dependencies install check-env install_mcw pdk-with-ciel bus-wrap-setup
 	@echo "\033[0;32mSetup complete!!\n\033[0m"
 
 # Openlane
@@ -336,7 +336,7 @@ run-precheck: check-pdk check-precheck enable-lvs-pdk
 
 .PHONY: enable-lvs-pdk
 enable-lvs-pdk:
-	$(UPRJ_ROOT)/venv/bin/volare enable $(OPEN_PDKS_COMMIT_LVS)
+	$(UPRJ_ROOT)/venv/bin/ciel enable $(OPEN_PDKS_COMMIT_LVS)
 
 BLOCKS = $(shell cd lvs && find * -maxdepth 0 -type d)
 LVS_BLOCKS = $(foreach block, $(BLOCKS), lvs-$(block))

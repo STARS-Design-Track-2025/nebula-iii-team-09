@@ -30,7 +30,7 @@ def main():
     print(f"Generating Config with {len(teams)-1} teams")
     
     # Specify the file to create
-    output_file = root_directory + "/openlane/user_project_wrapper/config.json"
+    output_file = root_directory + "/openlane/user_project_wrapper/config_test.json"
 
     # Write to the file
     with open(output_file, 'w') as f:
@@ -69,12 +69,11 @@ f"""
 """                
         "dir::../../verilog/rtl/user_project_wrapper.v"
     ],
-    "ROUTING_CORES": 6,
     "CLOCK_PERIOD": 25,
     "CLOCK_PORT": "wb_clk_i",
     "CLOCK_NET": "wb_clk_i",
     "ERROR_ON_KLAYOUT_DRC": false,
-    "FP_PDN_MACRO_HOOKS": [
+    "PDN_MACRO_CONNECTIONS": [
 """\
 )
         for team in teams:
@@ -83,94 +82,71 @@ f"""
         "mprj.{team}_Wrapper.{team}_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
 """\
 )
-                
-    
+            
         f.write(\
 """                
         "mprj.sram.sram_inst vccd1 vssd1 vccd1 vssd1"
     ],
-    "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
-    "MAGIC_DEF_LABELS": 0,
-    "VERILOG_FILES_BLACKBOX": [
-"""\
+"""
 )
-            
-        for team in teams:
-            f.write(\
-f"""      
-        "dir::../../verilog/gl/{team}.v",
-"""\
-)
-                
 
+# LibreLane macro configuration   
         f.write(\
-"""                
-        "dir::../../verilog/rtl/sram/sky130_sram_8kbyte_1r1w_32x2048_8.v"
-    ],
-    "EXTRA_LEFS": [
+"""
+    "MACROS": {
 """\
-)
-            
+)           
         for team in teams:
             f.write(\
-f"""      
-        "dir::../../lef/{team}.lef",
-"""\
-)
-                
-
-        f.write(\
-"""                
-        "dir::../../lef/sky130_sram_8kbyte_1r1w_32x2048_8.lef"
-    ],
-    "EXTRA_GDS_FILES": [
-"""\
-)
-            
-        for team in teams:
-            f.write(\
-f"""      
-        "dir::../../gds/{team}.gds",
-"""\
-)
-                
-
-        f.write(\
-"""                
-        "dir::../../gds/sky130_sram_8kbyte_1r1w_32x2048_8.gds"
-    ],
-    "EXTRA_LIBS": [
-"""\
-)        
-            
-        for team in teams:
-            f.write(\
-f"""      
-        "dir::../../lib/{team}.lib",
+f"""
+        "{team}": {{
+            "instances": {{
+                "mprj.{team}_Wrapper.{team}_WB.instance_to_wrap": {{
+                    "location": [],
+                    "orientation": "N"
+                }}
+            }},
+            "gds": ["dir::../../gds/{team}.gds"],
+            "lef": ["dir::../../lef/{team}.lef"],
+            "nl":  ["dir::../../verilog/gl/{team}.v"],
+            "spef": {{
+                "min_*": ["dir::../../spef/multicorner/{team}.min.spef"],
+                "nom_*": ["dir::../../spef/multicorner/{team}.nom.spef"],
+                "max_*": ["dir::../../spef/multicorner/{team}.max.spef"]
+            }},
+            "lib": {{
+                "*": "dir::../../lib/{team}.lib"
+            }},
+            "spice":[],
+            "sdf":{{}}
+        }},
 """\
 )
                 
         f.write(\
-"""     
-        "dir::../../lib/sky130_sram_8kbyte_1r1w_32x2048_8_TT_1p8V_25C.lib"
-    ],
-    "EXTRA_SPEFS": [
-"""\
-)  
-        for i, team in enumerate(teams):
-            comma = "," if i < len(teams) - 1 else ""
-            f.write(\
-f"""      
-        "{team}", 
-        "dir::../../spef/multicorner/{team}.min.spef", 
-        "dir::../../spef/multicorner/{team}.nom.spef", 
-        "dir::../../spef/multicorner/{team}.max.spef"{comma}
-"""\
-)
-                
-        f.write(\
-"""                
-    ],
+"""
+        "mprj.sram": {
+            "instances": {
+                "mprj.sram.sram_inst": {
+                    "location": [760, 474],
+                    "orientation": "N"
+                }
+            },
+            "gds": ["dir::../../gds/sky130_sram_8kbyte_1r1w_32x2048_8.gds"],
+            "lef": ["dir::../../lef/sky130_sram_8kbyte_1r1w_32x2048_8.lef"],
+            "nl": ["dir::../../verilog/rtl/sram/sky130_sram_8kbyte_1r1w_32x2048_8.v"],
+            "spef": {
+                "min_*": [],
+                "nom_*": [],
+                "max_*": []
+            },
+            "lib": {
+                "*": "dir::../../lib/sky130_sram_8kbyte_1r1w_32x2048_8_TT_1p8V_25C.lib"
+            },
+            "spice": [],
+            "sdf": { }
+        }          
+    },
     "BASE_SDC_FILE": "dir::base_user_project_wrapper.sdc",
     "IO_SYNC": 0,
     "MAX_TRANSITION_CONSTRAINT": 1.5,

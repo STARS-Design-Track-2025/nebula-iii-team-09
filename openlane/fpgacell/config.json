@@ -1,0 +1,72 @@
+{
+    "DESIGN_NAME": "fpgacell",
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/team_projects/team_09/src/fpga.sv",
+        "dir::../../verilog/rtl/team_projects/team_09/src/fpgacell.sv",
+        "dir::../../verilog/rtl/team_projects/team_09/src/LE.sv",
+        "dir::../../verilog/rtl/team_projects/team_09/src/CB.sv",
+        "dir::../../verilog/rtl/team_projects/team_09/src/SB.sv",
+        "dir::../../verilog/rtl/team_projects/team_09/src/LEI.sv"
+    ],
+
+    "//": "common settings",
+    "TOP_MODULE": "fpgacell",
+    "CLOCK_PERIOD": 25,
+    "CLOCK_PORT": "clk",
+    "//": "FP_CORE_UTIL not used with FP_SIZING absolute",
+    "FP_CORE_UTIL": 10,
+    "PL_TARGET_DENSITY": 0.8265,
+    "RUN_HEURISTIC_DIODE_INSERTION": false,
+    "ROUTING_CORES": 20,
+    "DRT_THREADS": 20,
+    "KLAYOUT_XOR)THREADS": 20,
+
+    "//": "Power Delivery Network (PDN) settings",
+    "FP_PDN_CORE_RING": 0,
+    "VDD_NETS": "vccd1",
+    "GND_NETS": "vssd1",
+
+    "FP_PDN_ENABLE_RAILS": true,
+    "FP_PDN_VOFFSET": 0,
+    "FP_PDN_HOFFSET": "expr::$FP_PDN_VOFFSET",
+    "FP_PDN_HPITCH": 163,
+    "FP_PDN_VPITCH": "expr::$FP_PDN_HPITCH",
+
+    "//": "for custom IO placement",
+    "FP_PIN_ORDER_CFG": "dir::fpgacell_pin_placement.cfg",
+
+    "//": "physical layout settings",
+    "RT_MAX_LAYER": "met4",
+    "FP_SIZING": "absolute",
+    "SYNTH_STRATEGY": "AREA 1",
+    "DIE_AREA": "0 0 179 179",
+    "CORE_AREA": "3 3 176 176",
+
+    "RUN_LINTER": false,
+
+    "//": "PDK settings",
+    "pdk::sky130*": {
+        "scl::sky130_fd_sc_hd": {
+            "CLOCK_PERIOD": 100
+        },
+        "scl::sky130_fd_sc_hdll": {
+            "CLOCK_PERIOD": 10
+        },
+        "scl::sky130_fd_sc_hs": {
+            "CLOCK_PERIOD": 8
+        },
+        "scl::sky130_fd_sc_ls": {
+            "CLOCK_PERIOD": 10,
+            "SYNTH_MAX_FANOUT": 5
+        },
+        "scl::sky130_fd_sc_ms": {
+            "CLOCK_PERIOD": 10
+        }
+    },
+    "pdk::gf180mcu*": {
+        "CLOCK_PERIOD": 24.0,
+        "FP_CORE_UTIL": 30,
+        "SYNTH_MAX_FANOUT": 4,
+        "PL_TARGET_DENSITY": 0.5
+    }
+}

@@ -147,7 +147,7 @@ list:
 
 .PHONY: enable-openlane-pdk
 enable-openlane-pdk:
-	$(UPRJ_ROOT)/venv/bin/volare enable $(OPEN_PDKS_COMMIT)
+	$(UPRJ_ROOT)/venv/bin/ciel enable $(OPEN_PDKS_COMMIT)
 
 .PHONY: $(designs)
 $(designs) : export current_design=$@
